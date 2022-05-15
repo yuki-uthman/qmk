@@ -7,11 +7,13 @@ for more options.
 
 #define MASTER_LEFT
 
+// Tap-hold configuration for home row mods.
+#define IGNORE_MOD_TAP_INTERRUPT
+#define PERMISSIVE_HOLD
+#define TAPPING_FORCE_HOLD_PER_KEY
+
 #ifdef TAPPING_TERM
     #undef TAPPING_TERM
     #define TAPPING_TERM 200
 #endif
-
-#define IGNORE_MOD_TAP_INTERRUPT
-
 

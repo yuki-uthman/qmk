@@ -6,8 +6,8 @@
 
 
 const custom_shift_key_t custom_shift_keys[] = {
-  {KC_DOT , KC_ENT}, // Shift . is ?
-  {KC_COMM, KC_EXLM}, // Shift , is !
+  {KC_M, KC_ENT},       // Ctrl + M => Enter
+  {KC_H, KC_BSPC},      // Ctrl + H => Backspace
   {KC_MINS, KC_EQL }, // Shift - is =
   {KC_COLN, KC_SCLN}, // Shift : is ;
 };
@@ -19,6 +19,7 @@ enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
     _QWERTY,
     _TMUX,
+    _SYMBOL,
     _LOWER,
     _RAISE,
     _ADJUST,
@@ -70,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
   KC_CAPS,  KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN,  KC_QUOT,
   KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE,     XXXXXXX,KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_RSFT,
-      KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), KC_LSFT,      KC_RSFT,  MT(MOD_RCTL, KC_SPC), MO(_LOWER), KC_RALT, KC_RGUI
+      KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), KC_LSFT,      KC_RSFT,  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
 ),
 
 
@@ -111,7 +112,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 
-
+[_SYMBOL] = LAYOUT(
+___,   ___,   ___,    ___,    ___,    ___,                      ___,    ___,    ___,    ___,    ___,  ___,
+___,   KC_QUOT, KC_LABK,  KC_RABK,  KC_DQUO,  KC_DOT,           KC_AMPR,    ___,    KC_LBRC,  KC_RBRC,  KC_PERC,  ___,
+___,   KC_EXLM, KC_MINS,  KC_PLUS,  KC_EQL,   KC_HASH,          KC_PIPE,  KC_COLN,  KC_LPRN,  KC_RPRN,  KC_QUES,  ___,
+___,   KC_CIRC, KC_SLSH,  KC_ASTR,  KC_BSLS,  ___,  ___,   ___, ___,      KC_DLR,   KC_LCBR,  KC_RBRC,  KC_AT,  ___,
+                        ___,___,___,___, ___,               ___,  ___, ___, ___, ___
+),
 
 
 

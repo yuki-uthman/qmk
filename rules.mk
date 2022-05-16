@@ -1,5 +1,9 @@
 SRC += features/custom_shift_keys.c
+
 OLED_DRIVER = SSD1306
+
 CONSOLE_ENABLE = no
-EXTRAKEY_ENABLE = yes
+EXTRAKEY_ENABLE = no
+
 KEY_OVERRIDE_ENABLE = yes
+TAP_DANCE_ENABLE = yes

@@ -36,6 +36,7 @@ enum custom_keycodes {
     KC_LEND,
     KC_DLINE,
     ARROW,
+    NEXTSEN,
     SESSION_NEXT,
     SESSION_PREV,
     WINDOW_NEXT,
@@ -45,6 +46,30 @@ enum custom_keycodes {
     WINDOW_VSPLIT,
     WINDOW_HSPLIT,
     PANE_CLOSE,
+};
+
+// Tap Dance declarations
+enum {
+    TD_DOT_NEXTSEN,
+};
+
+void next_sentence(qk_tap_dance_state_t *state, void *user_data) {
+  switch (state->count) {
+  case 1:
+    register_code(KC_DOT);
+    unregister_code(KC_DOT);
+    break;
+  case 2:
+    SEND_STRING(". ");
+    add_oneshot_mods(MOD_BIT(KC_LSFT));
+    break;
+  }
+}
+
+// Tap Dance definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+    // Tap once for Escape, twice for Caps Lock
+    [TD_DOT_NEXTSEN] = ACTION_TAP_DANCE_FN(next_sentence),
 };
 
 // Home row mods for QWERTY layer.

@@ -35,6 +35,7 @@ enum custom_keycodes {
     KC_LSTRT,
     KC_LEND,
     KC_DLINE,
+    ARROW,
     SESSION_NEXT,
     SESSION_PREV,
     WINDOW_NEXT,
@@ -83,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_BSPC,
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
   KC_CAPS,  QHOME_A,QHOME_S, QHOME_D, QHOME_F, KC_G,                     KC_H,    QHOME_J, QHOME_K, QHOME_L, QHOME_SC,  KC_QUOT,
-  KC_LSFT,  QHOME_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE,     XXXXXXX,KC_N,    KC_M, KC_COMM,  KC_DOT, QHOME_SL,  KC_RSFT,
+  KC_LSFT,  QHOME_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE,     XXXXXXX,KC_N,    KC_M, KC_COMM,  KC_DOT, QHOME_SL,  ARROW,
       KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), KC_LSFT,      KC_RSFT,  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
 ),
 
@@ -248,10 +249,12 @@ ___,   KC_CIRC, KC_SLSH,  KC_ASTR,  KC_BSLS,  ___,  ___,   ___, ___,      KC_DLR
 
 
 
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     if (!process_custom_shift_keys(keycode, record)) { return false; }
+
+    const uint8_t mods = get_mods();
+    const uint8_t oneshot_mods = get_oneshot_mods();
     switch (keycode) {
         case PANE_CLOSE:
             if (record->event.pressed) {
@@ -298,6 +301,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_LCTL(TMUX_KEY)SS_LSFT("9"));
             }
             break;
+        case ARROW:  // Arrow macro, types -> or =>.
+            if (record->event.pressed) {
+              if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {  // Is shift held?
+                del_mods(MOD_MASK_SHIFT);  // Temporarily delete shift.
+                del_oneshot_mods(MOD_MASK_SHIFT);
+                SEND_STRING("=>");
+                set_mods(mods);            // Restore mods.
+              } else {
+                SEND_STRING("->");
+              }
+            }
+            return false;
         case KC_QWERTY:
             if (record->event.pressed) {
                 set_single_persistent_default_layer(_QWERTY);

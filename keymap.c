@@ -4,7 +4,6 @@
 #define ___ KC_NO // just for easy reading
 #define TMUX_KEY "z"
 
-
 const custom_shift_key_t custom_shift_keys[] = {
   {KC_M, KC_ENT},       // Ctrl + M => Enter
   {KC_H, KC_BSPC},      // Ctrl + H => Backspace
@@ -47,6 +46,20 @@ enum custom_keycodes {
     PANE_CLOSE,
 };
 
+// Home row mods for QWERTY layer.
+// left hand
+#define QHOME_F LCTL_T(KC_F)
+#define QHOME_D LSFT_T(KC_D)
+#define QHOME_S LT(_SYMBOL, KC_S)
+#define QHOME_A LGUI_T(KC_A)
+#define QHOME_Z LALT_T(KC_Z)
+
+// right hand
+#define QHOME_J RCTL_T(KC_J)
+#define QHOME_K RSFT_T(KC_K)
+#define QHOME_L LT(_SYMBOL, KC_L)
+#define QHOME_SC RGUI_T(KC_SCLN)
+#define QHOME_SL LALT_T(KC_SLSH)
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -69,8 +82,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY] = LAYOUT(
   KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_BSPC,
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
-  KC_CAPS,  KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN,  KC_QUOT,
-  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE,     XXXXXXX,KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_RSFT,
+  KC_CAPS,  QHOME_A,QHOME_S, QHOME_D, QHOME_F, KC_G,                     KC_H,    QHOME_J, QHOME_K, QHOME_L, QHOME_SC,  KC_QUOT,
+  KC_LSFT,  QHOME_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE,     XXXXXXX,KC_N,    KC_M, KC_COMM,  KC_DOT, QHOME_SL,  KC_RSFT,
       KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), KC_LSFT,      KC_RSFT,  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
 ),
 

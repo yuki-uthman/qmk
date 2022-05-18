@@ -1,7 +1,7 @@
 #include QMK_KEYBOARD_H
 
+#include "features/casemodes.h"
 #include "features/custom_shift_keys.h"
-#include "features/caps_word.h"
 #include "features/abbreviation.h"
 
 #define ___ KC_TRNS // just for easy reading
@@ -51,6 +51,8 @@ enum custom_keycodes {
     WINDOW_VSPLIT,
     WINDOW_HSPLIT,
     PANE_CLOSE,
+    CAPSWORD,
+    SNAKECASE,
 };
 
 // Tap Dance declarations
@@ -116,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
   KC_CAPS,  QHOME_A,QHOME_S, QHOME_D, QHOME_F, KC_G,                     KC_H,    QHOME_J, QHOME_K, QHOME_L, QHOME_SC,  KC_QUOT,
   SFT_UNDERSCORE,  QHOME_Z,  KC_X,    KC_C,  KC_V,  KC_B, KC_MUTE,     XXX,KC_N,    KC_M, KC_COMM,  KC_DOT, QHOME_SL, KC_RSFT,
-    KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), KC_LSFT,      KC_RSFT,  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
+    KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), SNAKECASE,      CAPSWORD,  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
 ),
 
 
@@ -201,9 +203,36 @@ void matrix_scan_user(void) {
     clear_recent_keys();  // Timed out; clear the buffer.
 }
 
+// Returns true if the case modes should terminate, false if they continue
+// Note that the keycodes given to this function will be stripped down to
+// basic keycodes if they are dual function keys. Meaning a modtap on 'a'
+// will pass KC_A rather than LSFT_T(KC_A).
+// Case delimiters will also not be passed into this function.
+bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
+    switch (keycode) {
+        // Keycodes to ignore (don't disable caps word)
+        case KC_A ... KC_Z:
+        case KC_1 ... KC_0:
+        case KC_MINS:
+        case KC_UNDS:
+        case KC_BSPC:
+            // If mod chording disable the mods
+            if (record->event.pressed && (get_mods() != 0)) {
+                return true;
+            }
+            break;
+        default:
+            if (record->event.pressed) {
+                return true;
+            }
+            break;
+    }
+    return false;
+};
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
-    if (!process_caps_word(keycode, record)) { return false; }
+    if (!process_case_modes(keycode, record)) { return false; }
     if (!process_custom_shift_keys(keycode, record)) { return false; }
     if (!process_abbreviation(keycode, record)) { return false; }
 
@@ -273,6 +302,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;        // Return false to ignore further processing of key
             }
             break;
+        case CAPSWORD:
+            if (record->event.pressed) {
+                enable_caps_word();
+            }
+            return false;
+        case SNAKECASE:
+            if (record->event.pressed) {
+                enable_xcase_with(KC_UNDS);
+            }
+            return false;
         case KC_QWERTY:
             if (record->event.pressed) {
                 set_single_persistent_default_layer(_QWERTY);

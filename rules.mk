@@ -1,4 +1,4 @@
-SRC += features/caps_word.c
+SRC += features/casemodes.c
 SRC += features/custom_shift_keys.c
 SRC += features/abbreviation.c
 

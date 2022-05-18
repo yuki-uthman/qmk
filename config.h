@@ -17,3 +17,4 @@ for more options.
     #define TAPPING_TERM 200
 #endif
 
+#define CAPSWORD_USE_SHIFT

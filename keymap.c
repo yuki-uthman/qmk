@@ -1,5 +1,7 @@
 #include QMK_KEYBOARD_H
+
 #include "features/custom_shift_keys.h"
+#include "features/caps_word.h"
 #include "features/abbreviation.h"
 
 #define ___ KC_TRNS // just for easy reading
@@ -201,6 +203,7 @@ void matrix_scan_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
+    if (!process_caps_word(keycode, record)) { return false; }
     if (!process_custom_shift_keys(keycode, record)) { return false; }
     if (!process_abbreviation(keycode, record)) { return false; }
 

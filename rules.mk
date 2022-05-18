@@ -1,5 +1,5 @@
 SRC += features/custom_shift_keys.c
-SRC += features/next_sentence.c
+SRC += features/abbreviation.c
 
 OLED_DRIVER = SSD1306
 

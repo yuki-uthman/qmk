@@ -1,5 +1,5 @@
 #include <string.h>
-#include "next_sentence.h"
+#include "abbreviation.h"
 
 #define TIMEOUT_MS 5000  // Timeout in milliseconds.
 #define RECENT_SIZE 8    // Number of keys in `recent` buffer.
@@ -52,7 +52,7 @@ static bool update_recent_keys(uint16_t keycode, keyrecord_t* record) {
   return true;
 }
 
-bool process_next_sentence(uint16_t keycode, keyrecord_t* record) {
+bool process_abbreviation(uint16_t keycode, keyrecord_t* record) {
     if (update_recent_keys(keycode, record)) {
         if (recent[RECENT_SIZE - 2] == KC_DOT && recent[RECENT_SIZE - 1] == KC_SPC) {
             tap_code16(KC_SPC);

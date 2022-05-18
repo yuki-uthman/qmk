@@ -1,8 +1,8 @@
 #include QMK_KEYBOARD_H
 #include "features/custom_shift_keys.h"
-#include "features/next_sentence.h"
+#include "features/abbreviation.h"
 
-#define ___ KC_TRANS // just for easy reading
+#define ___ KC_TRNS // just for easy reading
 #define XXX KC_NO    // just for easy reading
 
 #define TMUX_KEY "z"
@@ -56,7 +56,7 @@ enum {
     TD_DOT_NEXTSEN,
 };
 
-void next_sentence(qk_tap_dance_state_t *state, void *user_data) {
+void abbreviation(qk_tap_dance_state_t *state, void *user_data) {
   switch (state->count) {
   case 1:
     register_code(KC_DOT);
@@ -72,7 +72,7 @@ void next_sentence(qk_tap_dance_state_t *state, void *user_data) {
 // Tap Dance definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap once for Escape, twice for Caps Lock
-    [TD_DOT_NEXTSEN] = ACTION_TAP_DANCE_FN(next_sentence),
+    /* [TD_DOT_NEXTSEN] = ACTION_TAP_DANCE_FN(next_sentence), */
 };
 
 // Home row mods for QWERTY layer.
@@ -113,8 +113,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_BSPC,
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
   KC_CAPS,  QHOME_A,QHOME_S, QHOME_D, QHOME_F, KC_G,                     KC_H,    QHOME_J, QHOME_K, QHOME_L, QHOME_SC,  KC_QUOT,
-      SFT_UNDERSCORE,  QHOME_Z,   KC_X,    KC_C,    KC_V,  KC_B, KC_MUTE,     XXX,KC_N,    KC_M, KC_COMM,  KC_DOT, QHOME_SL,  ARROW,
-          KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), S(KC_MINS),      KC_RSFT,  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
+  SFT_UNDERSCORE,  QHOME_Z,  KC_X,    KC_C,  KC_V,  KC_B, KC_MUTE,     XXX,KC_N,    KC_M, KC_COMM,  KC_DOT, QHOME_SL, KC_RSFT,
+    KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), KC_LSFT,      KC_RSFT,  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
 ),
 
 
@@ -159,7 +159,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ___,   ___,   ___,    ___,    ___,    ___,                      ___,    ___,    ___,    ___,    ___,  ___,
 ___,   KC_QUOT, KC_LABK,  KC_RABK,  KC_DQUO,  KC_DOT,           KC_AMPR,    ___,    KC_LBRC,  KC_RBRC,  KC_PERC,  ___,
 ___,   KC_EXLM, KC_MINS,  KC_PLUS,  KC_EQL,   KC_HASH,          KC_PIPE,  KC_COLN,  KC_LPRN,  KC_RPRN,  KC_QUES,  ___,
-___,   KC_CIRC, KC_SLSH,  KC_ASTR,  KC_BSLS,  ___,  ___,   ___, ___,      KC_DLR,   KC_LCBR,  KC_RBRC,  KC_AT,  ___,
+___,   KC_CIRC, KC_SLSH,  KC_ASTR,  KC_BSLS,  ___,  ___,   ___, ___,      KC_DLR,   KC_LCBR,  KC_RCBR,  KC_AT,  ___,
                         ___,___,___,___, ___,               ___,  ___, ___, ___, ___
 ),
 
@@ -202,7 +202,7 @@ void matrix_scan_user(void) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     if (!process_custom_shift_keys(keycode, record)) { return false; }
-    if (!process_next_sentence(keycode, record)) { return false; }
+    if (!process_abbreviation(keycode, record)) { return false; }
 
     const uint8_t mods = get_mods();
     const uint8_t oneshot_mods = get_oneshot_mods();

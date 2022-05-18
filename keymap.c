@@ -2,7 +2,9 @@
 #include "features/custom_shift_keys.h"
 #include "features/next_sentence.h"
 
-#define ___ KC_NO // just for easy reading
+#define ___ KC_TRANS // just for easy reading
+#define XXX KC_NO    // just for easy reading
+
 #define TMUX_KEY "z"
 
 const custom_shift_key_t custom_shift_keys[] = {
@@ -111,7 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_BSPC,
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
   KC_CAPS,  QHOME_A,QHOME_S, QHOME_D, QHOME_F, KC_G,                     KC_H,    QHOME_J, QHOME_K, QHOME_L, QHOME_SC,  KC_QUOT,
-      SFT_UNDERSCORE,  QHOME_Z,   KC_X,    KC_C,    KC_V,    KC_B, KC_MUTE,     XXXXXXX,KC_N,    KC_M, KC_COMM,  KC_DOT, QHOME_SL,  ARROW,
+      SFT_UNDERSCORE,  QHOME_Z,   KC_X,    KC_C,    KC_V,  KC_B, KC_MUTE,     XXX,KC_N,    KC_M, KC_COMM,  KC_DOT, QHOME_SL,  ARROW,
           KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), S(KC_MINS),      KC_RSFT,  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
 ),
 

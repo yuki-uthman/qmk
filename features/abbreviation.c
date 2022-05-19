@@ -59,6 +59,11 @@ bool process_abbreviation(uint16_t keycode, keyrecord_t* record) {
             add_oneshot_mods(MOD_BIT(KC_LSFT));
             return false;
         }
+        if (recent[RECENT_SIZE - 2] == KC_COMM && recent[RECENT_SIZE - 1] == KC_Y) {
+            SEND_STRING(SS_TAP(X_BSPC));
+            SEND_STRING("Yuki Yoshimine");
+            return false;
+        }
     }
     return true;
 }

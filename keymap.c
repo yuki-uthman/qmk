@@ -51,32 +51,29 @@ enum custom_keycodes {
     WINDOW_VSPLIT,
     WINDOW_HSPLIT,
     PANE_CLOSE,
-    CAPSWORD,
     SNAKECASE,
 };
 
 // Tap Dance declarations
 enum {
-    TD_DOT_NEXTSEN,
+    CAPSWORD,
 };
 
-void abbreviation(qk_tap_dance_state_t *state, void *user_data) {
-  switch (state->count) {
-  case 1:
-    register_code(KC_DOT);
-    unregister_code(KC_DOT);
-    break;
-  case 2:
-    SEND_STRING(". ");
-    add_oneshot_mods(MOD_BIT(KC_LSFT));
-    break;
-  }
+void capsword(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+        case 1:
+            add_oneshot_mods(MOD_BIT(KC_LSFT));
+            break;
+        case 2:
+            enable_caps_word();
+            break;
+    }
 }
 
 // Tap Dance definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap once for Escape, twice for Caps Lock
-    /* [TD_DOT_NEXTSEN] = ACTION_TAP_DANCE_FN(next_sentence), */
+    [CAPSWORD] = ACTION_TAP_DANCE_FN(capsword),
 };
 
 // Home row mods for QWERTY layer.
@@ -118,7 +115,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
   KC_CAPS,  QHOME_A,QHOME_S, QHOME_D, QHOME_F, KC_G,                     KC_H,    QHOME_J, QHOME_K, QHOME_L, QHOME_SC,  KC_QUOT,
   SFT_UNDERSCORE,  QHOME_Z,  KC_X,    KC_C,  KC_V,  KC_B, KC_MUTE,     XXX,KC_N,    KC_M, KC_COMM,  KC_DOT, QHOME_SL, KC_RSFT,
-    KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), SNAKECASE,      CAPSWORD,  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
+    KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), SNAKECASE,      TD(CAPSWORD),  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
 ),
 
 

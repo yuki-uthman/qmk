@@ -7,7 +7,7 @@
 #define ___ KC_TRNS // just for easy reading
 #define XXX KC_NO    // just for easy reading
 
-#define TMUX_KEY "z"
+#define TMUX_KEY C(KC_Z)
 
 const custom_shift_key_t custom_shift_keys[] = {
   {KC_M, KC_ENT},       // Ctrl + M => Enter
@@ -151,9 +151,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_TMUX] = LAYOUT(
   ___,   ___,   ___,    ___,    ___,    ___,                ___,    ___,    ___,    ___,    ___,  ___,
-  ___,   ___,   ___,    ___,    ___,    ___,                ___,    ___,    ___,    ___, ___,  WINDOW_VSPLIT,
+  ___,   ___,   ___,    ___,    ___,    ___,                ___,    ___,    ___,    ___, ___,  WINDOW_HSPLIT,
   ___,   ___,   ___,    ___,    ___,    ___,                WINDOW_PREV,  SESSION_NEXT,  SESSION_PREV,  WINDOW_NEXT,  WINDOW_ALT,  ___,
-  ___,   ___,   ___,    PANE_CLOSE, ___, ___, ___,     ___, ___,    ___,    ___,  ___, WINDOW_HSPLIT,  ___,
+  ___,   ___,   ___,    PANE_CLOSE, ___, ___, ___,     ___, ___,    ___,    ___,  ___, WINDOW_VSPLIT,  ___,
                         ___,___,___,___, ___,               ___,  WINDOW_ZOOM, ___, ___, ___
 ),
 
@@ -241,47 +241,56 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case PANE_CLOSE:
             if (record->event.pressed) {
-                SEND_STRING(SS_LCTL(TMUX_KEY)"x");
+                tap_code16(TMUX_KEY);
+                tap_code16(KC_X);
             }
             break;
         case WINDOW_NEXT:
             if (record->event.pressed) {
-                SEND_STRING(SS_LCTL(TMUX_KEY)"n");
+                tap_code16(TMUX_KEY);
+                tap_code16(KC_N);
             }
             break;
         case WINDOW_PREV:
             if (record->event.pressed) {
-                SEND_STRING(SS_LCTL(TMUX_KEY)"p");
+                tap_code16(TMUX_KEY);
+                tap_code16(KC_P);
             }
             break;
         case WINDOW_ALT:
             if (record->event.pressed) {
-                SEND_STRING(SS_LCTL(TMUX_KEY)"l");
+                tap_code16(TMUX_KEY);
+                tap_code16(KC_L);
             }
             break;
         case WINDOW_ZOOM:
             if (record->event.pressed) {
-                SEND_STRING(SS_LCTL(TMUX_KEY)"z");
+                tap_code16(TMUX_KEY);
+                tap_code16(KC_Z);
             }
             break;
         case WINDOW_HSPLIT:
             if (record->event.pressed) {
-                SEND_STRING(SS_LCTL(TMUX_KEY)SS_LSFT("5"));
+                tap_code16(TMUX_KEY);
+                tap_code16(S(KC_5));
             }
             break;
         case WINDOW_VSPLIT:
             if (record->event.pressed) {
-                SEND_STRING(SS_LCTL(TMUX_KEY)SS_LSFT("'"));
+                tap_code16(TMUX_KEY);
+                tap_code16(S(KC_QUOT));
             }
             break;
         case SESSION_NEXT:
             if (record->event.pressed) {
-                SEND_STRING(SS_LCTL(TMUX_KEY)SS_LSFT("0"));
+                tap_code16(TMUX_KEY);
+                tap_code16(S(KC_0));
             }
             break;
         case SESSION_PREV:
             if (record->event.pressed) {
-                SEND_STRING(SS_LCTL(TMUX_KEY)SS_LSFT("9"));
+                tap_code16(TMUX_KEY);
+                tap_code16(S(KC_9));
             }
             break;
         case ARROW:  // Arrow macro, types -> or =>.

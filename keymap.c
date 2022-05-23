@@ -51,12 +51,11 @@ enum custom_keycodes {
     WINDOW_VSPLIT,
     WINDOW_HSPLIT,
     PANE_CLOSE,
-    SNAKECASE,
 };
 
 // Tap Dance declarations
 enum {
-    CAPSWORD,
+    CAPSWORD, SYMLOCK,
 };
 
 void capsword(qk_tap_dance_state_t *state, void *user_data) {
@@ -70,10 +69,21 @@ void capsword(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
+void symlock(qk_tap_dance_state_t *state, void *user_data) {
+    switch (state->count) {
+        case 1:
+            set_oneshot_layer(_SYMBOL, ONESHOT_START);
+            break;
+        case 2:
+            layer_invert(_SYMBOL);
+            break;
+    }
+}
+
 // Tap Dance definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
-    // Tap once for Escape, twice for Caps Lock
     [CAPSWORD] = ACTION_TAP_DANCE_FN(capsword),
+    [SYMLOCK] = ACTION_TAP_DANCE_FN(symlock),
 };
 
 // Home row mods for QWERTY layer.
@@ -115,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
   KC_CAPS,  QHOME_A,QHOME_S, QHOME_D, QHOME_F, KC_G,                     KC_H,    QHOME_J, QHOME_K, QHOME_L, QHOME_SC,  KC_QUOT,
   SFT_UNDERSCORE,  QHOME_Z,  KC_X,    KC_C,  KC_V,  KC_B, KC_MUTE,     XXX,KC_N,    KC_M, KC_COMM,  KC_DOT, QHOME_SL, KC_RSFT,
-    KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), SNAKECASE,      TD(CAPSWORD),  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
+    KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), OSL(_SYMBOL),      TD(CAPSWORD),  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
 ),
 
 
@@ -311,11 +321,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case CAPSWORD:
             if (record->event.pressed) {
                 enable_caps_word();
-            }
-            return false;
-        case SNAKECASE:
-            if (record->event.pressed) {
-                enable_xcase_with(KC_UNDS);
             }
             return false;
         case KC_QWERTY:

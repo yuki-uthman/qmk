@@ -88,18 +88,20 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 // Home row mods for QWERTY layer.
 // left hand
-#define QHOME_F LCTL_T(KC_F)
-#define QHOME_D LSFT_T(KC_D)
-#define QHOME_S LT(_SYMBOL, KC_S)
-#define QHOME_A LGUI_T(KC_A)
-#define QHOME_Z LALT_T(KC_Z)
+/* #define QHOME_F LCTL_T(KC_F) */
+/* #define QHOME_D LSFT_T(KC_D) */
+/* #define QHOME_S LT(_SYMBOL, KC_S) */
+/* #define QHOME_A LGUI_T(KC_A) */
+/* #define QHOME_Z LALT_T(KC_Z) */
+#define QHOME_J LT(_SYMBOL, KC_J)
 
 // right hand
-#define QHOME_J RCTL_T(KC_J)
-#define QHOME_K RSFT_T(KC_K)
-#define QHOME_L LT(_SYMBOL, KC_L)
-#define QHOME_SC RGUI_T(KC_SCLN)
-#define QHOME_SL LALT_T(KC_SLSH)
+/* #define QHOME_J RCTL_T(KC_J) */
+/* #define QHOME_K RSFT_T(KC_K) */
+/* #define QHOME_L LT(_SYMBOL, KC_L) */
+/* #define QHOME_SC RGUI_T(KC_SCLN) */
+/* #define QHOME_SL LALT_T(KC_SLSH) */
+#define QHOME_F LT(_SYMBOL, KC_F)
 
 #define SFT_UNDERSCORE  LSFT_T(KC_UNDERSCORE)
 
@@ -117,15 +119,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            | LGUI | LAlt | LCTR |LOWER | /Enter  /       \Space \  |RAISE | RCTR | RAlt | RGUI |
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
- *            `----------------------------------'           '------''---------------------------'
+ *            `----------------------------------'            '------''---------------------------'
  */
 
 [_QWERTY] = LAYOUT(
   KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_BSPC,
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
-  KC_CAPS,  QHOME_A,QHOME_S, QHOME_D, QHOME_F, KC_G,                     KC_H,    QHOME_J, QHOME_K, QHOME_L, QHOME_SC,  KC_QUOT,
-  SFT_UNDERSCORE,  QHOME_Z,  KC_X,    KC_C,  KC_V,  KC_B, KC_MUTE,     XXX,KC_N,    KC_M, KC_COMM,  KC_DOT, QHOME_SL, KC_RSFT,
-    KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), OSL(_SYMBOL),      TD(CAPSWORD),  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
+  KC_ESC,  KC_A,   KC_S,    KC_D,    QHOME_F, KC_G,                     KC_H,    QHOME_J, KC_K,    KC_L,    KC_SCLN,  KC_QUOT,
+  SFT_UNDERSCORE,  KC_Z,  KC_X,    KC_C,  KC_V,  KC_B, KC_MUTE,     XXX, KC_N,    KC_M,    KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
+    KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), TD(CAPSWORD),      TD(CAPSWORD),  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
 ),
 
 
@@ -166,13 +168,43 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 
+
+
+
+
+
+
+
+
+
+
+/* SYMBOL
+ * ,-----------------------------------------.                    ,-----------------------------------------.
+ * |      |  F1  |  F2  |  F3  |  F4  |  F5  |                    |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * |  `   |   '  |   <  |   >  |   "  |   .  |                    |   &  |      |   [  |   ]  |   %  |   \  |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * | Tab  |   !  |   -  |   +  |   =  |   #  |-------.    ,-------|   |  |   :  |   (  |   )  |   ?  |   '  |
+ * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
+ * | Shift|   ^  |  /   |  *   |   \  |      |-------|    |-------|   n  |   $  |   {  |   }  |   @  | Shift|
+ * `-----------------------------------------/       /     \      \-----------------------------------------'
+ *            | LGUI | LAlt | LCTR |LOWER | /Enter  /       \Space \  |RAISE | RCTR | RAlt | RGUI |
+ *            |      |      |      |      |/       /         \      \ |      |      |      |      |
+ *            `----------------------------------'           '------''---------------------------'
+ */
 [_SYMBOL] = LAYOUT(
 ___,   ___,   ___,    ___,    ___,    ___,                      ___,    ___,    ___,    ___,    ___,  ___,
-___,   KC_QUOT, KC_LABK,  KC_RABK,  KC_DQUO,  KC_DOT,           KC_AMPR,    ___,    KC_LBRC,  KC_RBRC,  KC_PERC,  ___,
-___,   KC_EXLM, KC_MINS,  KC_PLUS,  KC_EQL,   KC_HASH,          KC_PIPE,  KC_COLN,  KC_LPRN,  KC_RPRN,  KC_QUES,  ___,
-___,   KC_CIRC, KC_SLSH,  KC_ASTR,  KC_BSLS,  ___,  ___,   ___, ___,      KC_DLR,   KC_LCBR,  KC_RCBR,  KC_AT,  ___,
+___,   KC_QUOT, KC_LABK,  KC_RABK,  KC_DQUO,  ___,           KC_AMPR,    ___,    KC_LBRC,  KC_RBRC,  KC_PERC,  ___,
+___,   KC_EXLM, KC_MINS,  KC_PLUS,  KC_EQL,   KC_HASH,          KC_PIPE,  KC_COLN,  KC_LPRN,  KC_RPRN,  KC_AT,  ___,
+___,   KC_CIRC, KC_SLSH,  KC_ASTR,  KC_BSLS,  ___,  ___,   ___, ___,      KC_DLR,   KC_LCBR,  KC_RCBR,  KC_QUES,  ___,
                         ___,___,___,___, ___,               ___,  ___, ___, ___, ___
 ),
+
+
+
+
+
+
 
 
 

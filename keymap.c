@@ -12,8 +12,8 @@
 const custom_shift_key_t custom_shift_keys[] = {
   {KC_M, KC_ENT},       // Ctrl + M => Enter
   {KC_H, KC_BSPC},      // Ctrl + H => Backspace
-  {KC_MINS, KC_EQL }, // Shift - is =
-  {KC_COLN, KC_SCLN}, // Shift : is ;
+  {KC_J, KC_DOWN},
+  {KC_K, KC_UP},
 };
 
 uint8_t NUM_CUSTOM_SHIFT_KEYS =
@@ -93,7 +93,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 /* #define QHOME_S LT(_SYMBOL, KC_S) */
 /* #define QHOME_A LGUI_T(KC_A) */
 /* #define QHOME_Z LALT_T(KC_Z) */
-#define QHOME_J LT(_SYMBOL, KC_J)
+/* #define QHOME_J LT(_SYMBOL, KC_J) */
 
 // right hand
 /* #define QHOME_J RCTL_T(KC_J) */
@@ -101,7 +101,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 /* #define QHOME_L LT(_SYMBOL, KC_L) */
 /* #define QHOME_SC RGUI_T(KC_SCLN) */
 /* #define QHOME_SL LALT_T(KC_SLSH) */
-#define QHOME_F LT(_SYMBOL, KC_F)
+/* #define QHOME_F LT(_SYMBOL, KC_F) */
 
 #define SFT_UNDERSCORE  LSFT_T(KC_UNDERSCORE)
 
@@ -123,9 +123,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_QWERTY] = LAYOUT(
-  KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_BSPC,
+   C_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_BSPC,
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
-  KC_ESC,  KC_A,   KC_S,    KC_D,    QHOME_F, KC_G,                     KC_H,    QHOME_J, KC_K,    KC_L,    KC_SCLN,  KC_QUOT,
+  KC_ESC,   KC_A,   KC_S,     KC_D,   KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,
   SFT_UNDERSCORE,  KC_Z,  KC_X,    KC_C,  KC_V,  KC_B, KC_MUTE,     XXX, KC_N,    KC_M,    KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
     KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), TD(CAPSWORD),      TD(CAPSWORD),  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
 ),

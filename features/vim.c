@@ -53,6 +53,10 @@ bool process_vim_mode(uint16_t keycode, const keyrecord_t *record) {
     case KC_L:
         register_motion(VIM_L, record);
         return false;
+    case KC_SLSH:
+        tap_code16(LGUI(KC_F));
+        disable_vim_mode();
+        return false;
     default:
       return true; // Process all other keycodes normally
     }

@@ -6,6 +6,7 @@
 #include "features/abbreviation.h"
 #include "features/vim.h"
 #include "features/left_ctrl.h"
+#include "features/macOS.h"
 
 #define ___ KC_TRNS // just for easy reading
 #define XXX KC_NO    // just for easy reading
@@ -35,6 +36,7 @@ enum custom_keycodes {
     KC_QWERTY = SAFE_RANGE,
     KC_VIM,
     KC_TMUX,
+    MAC,
     NEXTSEN,
     SESSION_NEXT,
     SESSION_PREV,
@@ -102,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_QWERTY] = LAYOUT(
   KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_VIM,
-  KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
+  MAC,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
   KC_ESC,   KC_A,   KC_S,     KC_D,   KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,
   SFT_UNDERSCORE,  KC_Z,  KC_X,    KC_C,  KC_V,  KC_B, KC_MUTE,     XXX, KC_N,    KC_M,    KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
     KC_LGUI, MO(_TMUX), MT(MOD_LCTL, KC_ENT), LEFT_THUMB, OSL(_SYMBOL),      TD(CAPSWORD),  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
@@ -224,6 +226,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_abbreviation(keycode, record))         { return false; }
     if (!process_vim_mode(keycode, record))             { return false; }
     if (!process_left_ctrl(keycode, record))            { return false; }
+    if (!process_mac_layer(keycode, record))            { return false; }
 
     switch (keycode) {
         case PANE_CLOSE:
@@ -309,6 +312,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 } else {
                     disable_left_ctrl();
                     xprintf("left thumb hold released\n");
+                }
+            }
+            return false;  // Skip default handling.
+        case MAC:
+            if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    xprintf("mac layer tap pressed\n");
+                } else {
+                    xprintf("mac layer tap released\n");
+                }
+            } else {                        // Key is being held.
+                if (record->event.pressed) {
+                    enable_mac_layer();
+                    xprintf("mac layer hold pressed\n");
+                } else {
+                    disable_mac_layer();
+                    xprintf("mac layer hold released\n");
                 }
             }
             return false;  // Skip default handling.

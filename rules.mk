@@ -4,6 +4,7 @@ SRC += features/abbreviation.c
 SRC += features/motions.c
 SRC += features/vim.c
 SRC += features/left_ctrl.c
+SRC += features/macOS.c
 
 OLED_DRIVER = SSD1306
 

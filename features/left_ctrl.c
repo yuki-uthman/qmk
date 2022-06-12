@@ -63,6 +63,20 @@ bool process_left_ctrl(uint16_t keycode, const keyrecord_t *record) {
             unregister_code16(KC_ENT);
         }
         return false;
+    case KC_DOT:
+        if (record->event.pressed) {
+            register_code16(LSG(KC_RBRC));
+        } else {
+            unregister_code16(LSG(KC_RBRC));
+        }
+        return false;
+    case KC_COMM:
+        if (record->event.pressed) {
+            register_code16(LSG(KC_LBRC));
+        } else {
+            unregister_code16(LSG(KC_LBRC));
+        }
+        return false;
     case 28972:
         if (record->event.pressed) {
             xprintf("space pressed\n");
@@ -71,7 +85,7 @@ bool process_left_ctrl(uint16_t keycode, const keyrecord_t *record) {
             unregister_code16(G(KC_SPC));
         }
         return false;
-    default:
+    default: // everything else Ctrl + Keycode
         if (record->event.pressed) {
             xprintf("%u pressed\n", keycode);
             register_code16(C(keycode));

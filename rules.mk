@@ -3,6 +3,7 @@ SRC += features/custom_shift_keys.c
 SRC += features/abbreviation.c
 SRC += features/motions.c
 SRC += features/vim.c
+SRC += features/left_ctrl.c
 
 OLED_DRIVER = SSD1306
 

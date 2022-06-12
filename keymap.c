@@ -1,9 +1,11 @@
 #include QMK_KEYBOARD_H
 
+#include "print.h"
 #include "features/casemodes.h"
 #include "features/custom_shift_keys.h"
 #include "features/abbreviation.h"
 #include "features/vim.h"
+#include "features/left_ctrl.h"
 
 #define ___ KC_TRNS // just for easy reading
 #define XXX KC_NO    // just for easy reading
@@ -32,6 +34,7 @@ enum custom_keycodes {
     KC_QWERTY = SAFE_RANGE,
     KC_VIM,
     KC_TMUX,
+    LEFT_CTRL,
     NEXTSEN,
     SESSION_NEXT,
     SESSION_PREV,
@@ -102,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
   KC_ESC,   KC_A,   KC_S,     KC_D,   KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,
   SFT_UNDERSCORE,  KC_Z,  KC_X,    KC_C,  KC_V,  KC_B, KC_MUTE,     XXX, KC_N,    KC_M,    KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
-    KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), TD(CAPSWORD),      TD(CAPSWORD),  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
+    KC_LGUI, MO(_TMUX), LEFT_CTRL, MT(MOD_LCTL, KC_ENT), TD(CAPSWORD),      TD(CAPSWORD),  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
 ),
 
 
@@ -220,6 +223,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_custom_shift_keys(keycode, record))    { return false; }
     if (!process_abbreviation(keycode, record))         { return false; }
     if (!process_vim_mode(keycode, record))             { return false; }
+    if (!process_left_ctrl(keycode, record))            { return false; }
 
     switch (keycode) {
         case PANE_CLOSE:
@@ -276,12 +280,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16(S(KC_9));
             }
             break;
-        case SFT_UNDERSCORE:
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_UNDERSCORE);
-                return false;        // Return false to ignore further processing of key
-            }
-            break;
         case CAPSWORD:
             if (record->event.pressed) {
                 enable_caps_word();
@@ -295,6 +293,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_VIM:
             if (record->event.pressed) {
                 toggle_vim_mode();
+            }
+            return false;
+         case LEFT_CTRL:
+            if (record->event.pressed) {
+                enable_left_ctrl();
+                xprintf("left ctrl held\n");
+            } else {
+                disable_left_ctrl();
+                xprintf("left ctrl released\n");
             }
             return false;
     }

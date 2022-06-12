@@ -11,6 +11,7 @@
 #define XXX KC_NO    // just for easy reading
 
 #define TMUX_KEY C(KC_Z)
+#define LEFT_THUMB  LT(0, KC_1)
 
 const custom_shift_key_t custom_shift_keys[] = {
   {KC_M, KC_ENT},       // Ctrl + M => Enter
@@ -34,7 +35,6 @@ enum custom_keycodes {
     KC_QWERTY = SAFE_RANGE,
     KC_VIM,
     KC_TMUX,
-    LEFT_CTRL,
     NEXTSEN,
     SESSION_NEXT,
     SESSION_PREV,
@@ -105,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
   KC_ESC,   KC_A,   KC_S,     KC_D,   KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,
   SFT_UNDERSCORE,  KC_Z,  KC_X,    KC_C,  KC_V,  KC_B, KC_MUTE,     XXX, KC_N,    KC_M,    KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
-    KC_LGUI, MO(_TMUX), LEFT_CTRL, MT(MOD_LCTL, KC_ENT), TD(CAPSWORD),      TD(CAPSWORD),  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
+    KC_LGUI, MO(_TMUX), LEFT_THUMB, MT(MOD_LCTL, KC_ENT), OSL(_SYMBOL),      TD(CAPSWORD),  MT(MOD_RCTL, KC_SPC), FANCY_KEY, KC_RALT, KC_RGUI
 ),
 
 
@@ -295,15 +295,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 toggle_vim_mode();
             }
             return false;
-         case LEFT_CTRL:
-            if (record->event.pressed) {
-                enable_left_ctrl();
-                xprintf("left ctrl held\n");
-            } else {
-                disable_left_ctrl();
-                xprintf("left ctrl released\n");
+        case LEFT_THUMB:
+            if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    xprintf("left thumb tap pressed\n");
+                } else {
+                    xprintf("left thumb tap released\n");
+                }
+            } else {                        // Key is being held.
+                if (record->event.pressed) {
+                    enable_left_ctrl();
+                    xprintf("left thumb hold pressed\n");
+                } else {
+                    disable_left_ctrl();
+                    xprintf("left thumb hold released\n");
+                }
             }
-            return false;
+            return false;  // Skip default handling.
     }
     return true;
 }

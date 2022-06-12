@@ -2,7 +2,6 @@
 
 #include "print.h"
 #include "features/casemodes.h"
-#include "features/custom_shift_keys.h"
 #include "features/abbreviation.h"
 #include "features/vim.h"
 #include "features/left_ctrl.h"
@@ -13,16 +12,6 @@
 
 #define TMUX_KEY C(KC_Z)
 #define LEFT_THUMB  LT(0, KC_1)
-
-const custom_shift_key_t custom_shift_keys[] = {
-  {KC_M, KC_ENT},       // Ctrl + M => Enter
-  {KC_H, KC_BSPC},      // Ctrl + H => Backspace
-  {KC_J, KC_DOWN},
-  {KC_K, KC_UP},
-};
-
-uint8_t NUM_CUSTOM_SHIFT_KEYS =
-    sizeof(custom_shift_keys) / sizeof(custom_shift_key_t);
 
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
@@ -222,7 +211,6 @@ bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     if (!process_case_modes(keycode, record))           { return false; }
-    if (!process_custom_shift_keys(keycode, record))    { return false; }
     if (!process_abbreviation(keycode, record))         { return false; }
     if (!process_vim_mode(keycode, record))             { return false; }
     if (!process_left_ctrl(keycode, record))            { return false; }

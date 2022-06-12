@@ -1,7 +1,7 @@
 #include QMK_KEYBOARD_H
 
 #include "print.h"
-#include "features/casemodes.h"
+#include "features/caps_word.h"
 #include "features/abbreviation.h"
 #include "features/vim.h"
 #include "features/left_ctrl.h"
@@ -49,7 +49,7 @@ void capsword(qk_tap_dance_state_t *state, void *user_data) {
             add_oneshot_mods(MOD_BIT(KC_LSFT));
             break;
         case 2:
-            enable_caps_word();
+            caps_word_set(true);
             break;
     }
 }
@@ -181,36 +181,9 @@ void matrix_scan_user(void) {
     clear_recent_keys();  // Timed out; clear the buffer.
 }
 
-// Returns true if the case modes should terminate, false if they continue
-// Note that the keycodes given to this function will be stripped down to
-// basic keycodes if they are dual function keys. Meaning a modtap on 'a'
-// will pass KC_A rather than LSFT_T(KC_A).
-// Case delimiters will also not be passed into this function.
-bool terminate_case_modes(uint16_t keycode, const keyrecord_t *record) {
-    switch (keycode) {
-        // Keycodes to ignore (don't disable caps word)
-        case KC_A ... KC_Z:
-        case KC_1 ... KC_0:
-        case KC_MINS:
-        case KC_UNDS:
-        case KC_BSPC:
-            // If mod chording disable the mods
-            if (record->event.pressed && (get_mods() != 0)) {
-                return true;
-            }
-            break;
-        default:
-            if (record->event.pressed) {
-                return true;
-            }
-            break;
-    }
-    return false;
-};
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
-    if (!process_case_modes(keycode, record))           { return false; }
+    if (!process_caps_word(keycode, record))            { return false; }
     if (!process_abbreviation(keycode, record))         { return false; }
     if (!process_vim_mode(keycode, record))             { return false; }
     if (!process_left_ctrl(keycode, record))            { return false; }
@@ -271,11 +244,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16(S(KC_9));
             }
             break;
-        case CAPSWORD:
-            if (record->event.pressed) {
-                enable_caps_word();
-            }
-            return false;
         case KC_QWERTY:
             if (record->event.pressed) {
                 set_single_persistent_default_layer(_QWERTY);

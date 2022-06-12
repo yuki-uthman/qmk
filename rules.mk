@@ -1,4 +1,4 @@
-SRC += features/casemodes.c
+SRC += features/caps_word.c
 SRC += features/abbreviation.c
 SRC += features/motions.c
 SRC += features/vim.c

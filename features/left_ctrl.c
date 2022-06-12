@@ -63,9 +63,9 @@ bool process_left_ctrl(uint16_t keycode, const keyrecord_t *record) {
             unregister_code16(KC_ENT);
         }
         return false;
-    case KC_SPC:
+    case 28972:
         if (record->event.pressed) {
-            xprintf("space pressed");
+            xprintf("space pressed\n");
             register_code16(G(KC_SPC));
         } else {
             unregister_code16(G(KC_SPC));
@@ -73,10 +73,15 @@ bool process_left_ctrl(uint16_t keycode, const keyrecord_t *record) {
         return false;
     default:
         if (record->event.pressed) {
+            xprintf("%u pressed\n", keycode);
             register_code16(C(keycode));
         } else {
+            if (keycode == 16414) { // handle the hold without pressing any other key and release
+                return true;
+            }
+            xprintf("%u released\n", keycode);
             unregister_code16(C(keycode));
         }
-        return true;
+        return false;
     }
 }

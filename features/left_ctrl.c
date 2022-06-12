@@ -77,10 +77,9 @@ bool process_left_ctrl(uint16_t keycode, const keyrecord_t *record) {
             unregister_code16(LSG(KC_LBRC));
         }
         return false;
-    case 28972:
+    case 28972: // handle left_ctrl + MT(ctrl, space)
         if (record->event.pressed) {
-            xprintf("space pressed\n");
-            register_code16(G(KC_SPC));
+            register_code16(G(KC_SPC)); // open Alfred
         } else {
             unregister_code16(G(KC_SPC));
         }

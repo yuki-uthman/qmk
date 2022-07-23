@@ -1,7 +1,7 @@
 SRC += features/caps_word.c
-SRC += features/abbreviation.c
+# SRC += features/abbreviation.c
 SRC += features/motions.c
-SRC += features/vim.c
+SRC += features/right_ctrl.c
 SRC += features/left_ctrl.c
 SRC += features/macOS.c
 

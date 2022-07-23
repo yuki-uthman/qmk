@@ -2,9 +2,9 @@
 
 #include "print.h"
 #include "features/caps_word.h"
-#include "features/abbreviation.h"
-#include "features/vim.h"
+/* #include "features/abbreviation.h */
 #include "features/left_ctrl.h"
+#include "features/right_ctrl.h"
 #include "features/macOS.h"
 
 #define ___ KC_TRNS // just for easy reading
@@ -12,6 +12,11 @@
 
 #define TMUX_KEY C(KC_Z)
 #define LEFT_THUMB  LT(0, KC_1)
+#define RIGHT_THUMB  LT(0, KC_2)
+#define MAC  LT(0, KC_3)
+#define ESC  LT(0, KC_4)
+#define RSHIFT LT(0, KC_6)
+#define LSHIFT LT(0, KC_5)
 
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
@@ -25,7 +30,6 @@ enum custom_keycodes {
     KC_QWERTY = SAFE_RANGE,
     KC_VIM,
     KC_TMUX,
-    MAC,
     NEXTSEN,
     SESSION_NEXT,
     SESSION_PREV,
@@ -78,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
  * QWERTY
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |  `   |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  `   |
+ * |  `   |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  \   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * | ESC  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  | Bspc |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -92,46 +96,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_QWERTY] = LAYOUT(
-  KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_VIM,
-  MAC,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
-  KC_ESC,   KC_A,   KC_S,     KC_D,   KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,
-  SFT_UNDERSCORE,  KC_Z,  KC_X,    KC_C,  KC_V,  KC_B, KC_MUTE,     XXX, KC_N,    KC_M,    KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
-    KC_LGUI, MO(_TMUX), MT(MOD_LCTL, KC_ENT), LEFT_THUMB, OSL(_SYMBOL),      TD(CAPSWORD),  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
+  KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_BSLS,
+  KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSPC,
+  MAC,   KC_A,   KC_S,     KC_D,   KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,
+  LSHIFT,  KC_Z,  KC_X,    KC_C,  KC_V,  KC_B, KC_MUTE,     XXX, KC_N,    KC_M,    KC_COMM, KC_DOT, KC_SLSH, RSHIFT,
+    MO(_TMUX), KC_LALT, OSL(_SYMBOL), LEFT_THUMB, KC_LGUI,      KC_RGUI,  RIGHT_THUMB, OSL(_SYMBOL), KC_RALT, ___
 ),
 
-
-
-[_VIM] = LAYOUT(
-  KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_QWERTY,
-  KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSLS,
-  KC_ESC,   KC_A,   KC_S,     KC_D,   KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,
-  SFT_UNDERSCORE,  KC_Z,  KC_X,    KC_C,  KC_V,  KC_B, KC_MUTE,     XXX, KC_N,    KC_M,    KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
-    KC_LGUI,KC_LALT,MO(_TMUX), MT(MOD_LCTL, KC_ENT), TD(CAPSWORD),      TD(CAPSWORD),  MT(MOD_RCTL, KC_SPC), MO(_SYMBOL), KC_RALT, KC_RGUI
-),
-
-
-
-
-
-
-
-
-
-/*
- * TMUX
- * ,-----------------------------------------.                    ,-----------------------------------------.
- * |  `   |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  `   |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | ESC  |   Q  |   W  |   F  |   P  |   G  |                    |   J  |   L  |   U  |   Y  |   ;  | Bspc |
- * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | TAB  |   A  |   R  |   S  |   T  |   D  |-------.    ,-------|   H  |   N  |   E  |   I  |   O  |  '   |
- * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   K  |   M  |   ,  |   .  |   /  |RShift|
- * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | LGUI | LAlt | LCTR |LOWER | /Enter  /       \Space \  |RAISE | RCTR | RAlt | RGUI |
- *            |      |      |      |      |/       /         \      \ |      |      |      |      |
- *            `----------------------------------'           '------''---------------------------'
- */
 
 [_TMUX] = LAYOUT(
   ___,   ___,   ___,    ___,    ___,    ___,                ___,    ___,    ___,    ___,    ___,  ___,
@@ -142,50 +113,39 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 
-
-
-
-
-
-
-
-
-
-
-
 /* SYMBOL
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |  F1  |  F2  |  F3  |  F4  |  F5  |                    |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
+ * |      |   !  |   @  |   #  |   $  |   %  |                    |  ^   |  &   |   *  |   [  |   ]  |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |  `   |   '  |   <  |   >  |   "  |   .  |                    |   &  |      |   [  |   ]  |   %  |   \  |
+ * |      |      |   <  |   >  |      |      |                    |      |      |   {  |   }  |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | Tab  |   !  |   -  |   +  |   =  |   #  |-------.    ,-------|   |  |   :  |   (  |   )  |   ?  |   '  |
+ * |      |   !  |   -  |   +  |   =  |      |-------.    ,-------|      |      |   (  |   )  |   :  |   "  |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * | Shift|   ^  |  /   |  *   |   \  |      |-------|    |-------|   n  |   $  |   {  |   }  |   @  | Shift|
+ * | Shift|   ^  |  /   |   *  |   \  |      |-------|    |-------|      |      |   <  |   >  |   ?  |   _  |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            | LGUI | LAlt | LCTR |LOWER | /Enter  /       \Space \  |RAISE | RCTR | RAlt | RGUI |
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
  *            `----------------------------------'           '------''---------------------------'
  */
 [_SYMBOL] = LAYOUT(
-___,   ___,   ___,    ___,    ___,    ___,                      ___,    ___,    ___,    ___,    ___,  ___,
-___,   KC_QUOT, KC_LABK,  KC_RABK,  KC_DQUO,  ___,           KC_AMPR,    ___,    KC_LBRC,  KC_RBRC,  KC_PERC,  ___,
-___,   KC_EXLM, KC_MINS,  KC_PLUS,  KC_EQL,   KC_HASH,          KC_PIPE,  KC_COLN,  KC_LPRN,  KC_RPRN,  KC_AT,  ___,
-___,   KC_CIRC, KC_SLSH,  KC_ASTR,  KC_BSLS,  ___,  ___,   ___, ___,      KC_DLR,   KC_LCBR,  KC_RCBR,  KC_QUES,  ___,
+___,   KC_EXLM,  KC_AT,   KC_HASH,  KC_DLR,  KC_PERC,              KC_CIRC, KC_AMPR,  KC_ASTR,  ___,  ___,  ___,
+___,   ___,     KC_LABK,  KC_RABK,  ___,  ___,              ___,    ___,    KC_LCBR,  KC_RCBR,  KC_LBRC,  KC_RBRC,
+___,   KC_EXLM, KC_MINS,  KC_PLUS,  KC_EQL,   ___,          KC_BSPC,  ___,  KC_LPRN,  KC_RPRN,  KC_COLN,  KC_DQUO,
+___,   KC_CIRC, KC_SLSH,  KC_ASTR,  KC_BSLS,  ___,  ___,   ___, ___, ___,   KC_LABK,  KC_RABK,  KC_QUES,  KC_UNDS,
                         ___,___,___,___, ___,               ___,  ___, ___, ___, ___
 ),
 
 };
 
-void matrix_scan_user(void) {
-    clear_recent_keys();  // Timed out; clear the buffer.
-}
+/* void matrix_scan_user(void) { */
+/*     clear_recent_keys();  // Timed out; clear the buffer. */
+/* } */
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     if (!process_caps_word(keycode, record))            { return false; }
-    if (!process_abbreviation(keycode, record))         { return false; }
-    if (!process_vim_mode(keycode, record))             { return false; }
+    /* if (!process_abbreviation(keycode, record))         { return false; } */
+    if (!process_right_ctrl(keycode, record))           { return false; }
     if (!process_left_ctrl(keycode, record))            { return false; }
     if (!process_mac_layer(keycode, record))            { return false; }
 
@@ -249,42 +209,91 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 set_single_persistent_default_layer(_QWERTY);
             }
             return false;
-        case KC_VIM:
-            if (record->event.pressed) {
-                toggle_vim_mode();
+        case RSHIFT:
+            if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    register_code16(KC_MINS);
+                } else {
+                    unregister_code16(KC_MINS);
+                }
+            } else {                        // Key is being held.
+                if (record->event.pressed) {
+                    register_mods(MOD_BIT(KC_RSFT));
+                } else {
+                    unregister_mods(MOD_BIT(KC_RSFT));
+                }
+            }
+            return false;
+        case LSHIFT:
+            if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    register_code16(KC_UNDS);
+                } else {
+                    unregister_code16(KC_UNDS);
+                }
+            } else {                        // Key is being held.
+                if (record->event.pressed) {
+                    register_mods(MOD_BIT(KC_LSFT));
+                } else {
+                    unregister_mods(MOD_BIT(KC_LSFT));
+                }
             }
             return false;
         case LEFT_THUMB:
             if (record->tap.count > 0) {    // Key is being tapped.
                 if (record->event.pressed) {
-                    xprintf("left thumb tap pressed\n");
                 } else {
-                    xprintf("left thumb tap released\n");
                 }
             } else {                        // Key is being held.
                 if (record->event.pressed) {
                     enable_left_ctrl();
-                    xprintf("left thumb hold pressed\n");
                 } else {
                     disable_left_ctrl();
-                    xprintf("left thumb hold released\n");
+                }
+            }
+            return false;  // Skip default handling.
+        case RIGHT_THUMB:
+            if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    register_code16(KC_SPC);
+                } else {
+                    unregister_code16(KC_SPC);
+                }
+            } else {                        // Key is being held.
+                if (record->event.pressed) {
+                    enable_right_ctrl();
+                } else {
+                    disable_right_ctrl();
                 }
             }
             return false;  // Skip default handling.
         case MAC:
             if (record->tap.count > 0) {    // Key is being tapped.
                 if (record->event.pressed) {
-                    xprintf("mac layer tap pressed\n");
+                    register_code16(KC_ESC);
                 } else {
-                    xprintf("mac layer tap released\n");
+                    unregister_code16(KC_ESC);
                 }
+                caps_word_set(false);
             } else {                        // Key is being held.
                 if (record->event.pressed) {
                     enable_mac_layer();
-                    xprintf("mac layer hold pressed\n");
                 } else {
                     disable_mac_layer();
-                    xprintf("mac layer hold released\n");
+                }
+            }
+            return false;  // Skip default handling.
+        case ESC:
+            if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    register_code16(KC_ESC);
+                } else {
+                    unregister_code16(KC_ESC);
+                }
+                caps_word_set(false);
+            } else {                        // Key is being held.
+                if (record->event.pressed) {
+                } else {
                 }
             }
             return false;  // Skip default handling.

@@ -41,16 +41,16 @@ bool process_mac_layer(uint16_t keycode, const keyrecord_t *record) {
     switch (keycode) {
     case KC_H:
         if (record->event.pressed) {
-            register_code16(C(KC_LEFT));
+            register_code16(LAG(KC_LEFT));
         } else {
-            unregister_code16(C(KC_LEFT));
+            unregister_code16(LAG(KC_LEFT));
         }
         return false;
     case KC_L:
         if (record->event.pressed) {
-            register_code16(C(KC_RIGHT));
+            register_code16(LAG(KC_RIGHT));
         } else {
-            unregister_code16(C(KC_RIGHT));
+            unregister_code16(LAG(KC_RIGHT));
         }
         return false;
     case KC_J:
@@ -71,18 +71,18 @@ bool process_mac_layer(uint16_t keycode, const keyrecord_t *record) {
             unregister_code16(KC_TAB);
         }
         return false;
-    case KC_DOT:
+    case KC_N:
         if (record->event.pressed) {
-            register_code16(LSG(KC_RBRC));
+            register_code16(LAG(KC_RIGHT));
         } else {
-            unregister_code16(LSG(KC_RBRC));
+            unregister_code16(LAG(KC_RIGHT));
         }
         return false;
-    case KC_COMM:
+    case KC_P:
         if (record->event.pressed) {
-            register_code16(LSG(KC_LBRC));
+            register_code16(LAG(KC_LEFT));
         } else {
-            unregister_code16(LSG(KC_LBRC));
+            unregister_code16(LAG(KC_LEFT));
         }
         return false;
     default: // everything else Ctrl + Keycode
@@ -90,7 +90,7 @@ bool process_mac_layer(uint16_t keycode, const keyrecord_t *record) {
             xprintf("%u pressed\n", keycode);
             register_code16(C(keycode));
         } else {
-            if (keycode == 23985) { // handle the hold without pressing any other key and release
+            if (keycode == 16416) { // handle the hold without pressing any other key and release
                 return true;
             }
             xprintf("%u released\n", keycode);

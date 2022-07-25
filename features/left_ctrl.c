@@ -33,9 +33,9 @@ bool process_left_ctrl(uint16_t keycode, const keyrecord_t *record) {
     switch (keycode) {
     case KC_H:
         if (record->event.pressed) {
-            register_code16(KC_LEFT);
+            register_code16(KC_BSPC);
         } else {
-            unregister_code16(KC_LEFT);
+            unregister_code16(KC_BSPC);
         }
         return false;
     case KC_J:

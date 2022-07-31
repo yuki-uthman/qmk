@@ -67,6 +67,12 @@ bool process_left_ctrl(uint16_t keycode, const keyrecord_t *record) {
         }
         return false;
 
+    case KC_Q:
+        if (record->event.pressed) {
+            SEND_STRING(":q!");
+        }
+        return false;
+
 // symbols
 //  ASDF !-+=
     case KC_F:
@@ -111,6 +117,22 @@ bool process_left_ctrl(uint16_t keycode, const keyrecord_t *record) {
             register_code16(KC_LABK);
         } else {
             unregister_code16(KC_LABK);
+        }
+        return false;
+
+    case KC_SCLN:
+        if (record->event.pressed) {
+            register_code16(KC_COLN);
+        } else {
+            unregister_code16(KC_COLN);
+        }
+        return false;
+
+    case KC_QUOT:
+        if (record->event.pressed) {
+            register_code16(KC_DQUO);
+        } else {
+            unregister_code16(KC_DQUO);
         }
         return false;
 

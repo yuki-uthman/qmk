@@ -117,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      |   !  |   @  |   #  |   $  |   %  |                    |  ^   |  &   |   *  |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |   <  |   >  |      |      |                    |      |      |   {  |   }  |      |      |
+ * |      |   '  |   <  |   >  |   "  |      |                    |      |      |   {  |   }  |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |   !  |   -  |   +  |   =  |      |-------.    ,-------|      |      |   (  |   )  |   :  |   "  |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
@@ -129,7 +129,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_SYMBOL] = LAYOUT(
 ___,   KC_EXLM,  KC_AT,   KC_HASH,  KC_DLR,  KC_PERC,              KC_CIRC, KC_AMPR,  KC_ASTR,  ___,  ___,  ___,
-___,   ___,     KC_LABK,  KC_RABK,  ___,  ___,              ___,    ___,    KC_LCBR,  KC_RCBR,  KC_LBRC,  KC_RBRC,
+___,   KC_QUOT,     KC_LABK,  KC_RABK,  KC_DQUO,  ___,              ___,    ___,    KC_LCBR,  KC_RCBR,  KC_LBRC,  KC_RBRC,
 ___,   KC_EXLM, KC_MINS,  KC_PLUS,  KC_EQL,   ___,          KC_BSPC,  ___,  KC_LPRN,  KC_RPRN,  KC_COLN,  KC_DQUO,
 ___,   KC_CIRC, KC_SLSH,  KC_ASTR,  KC_BSLS,  ___,  ___,   ___, ___, ___,   KC_LABK,  KC_RABK,  KC_QUES,  KC_UNDS,
                         ___,___,___,___, ___,               ___,  ___, ___, ___, ___

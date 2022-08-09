@@ -2,7 +2,6 @@
 
 #include "print.h"
 #include "features/caps_word.h"
-/* #include "features/abbreviation.h */
 #include "features/left_ctrl.h"
 #include "features/right_ctrl.h"
 #include "features/macOS.h"
@@ -11,12 +10,12 @@
 #define XXX KC_NO    // just for easy reading
 
 #define TMUX_KEY C(KC_Z)
-#define LEFT_THUMB  LT(0, KC_1)
-#define RIGHT_THUMB  LT(0, KC_2)
-#define MAC  LT(0, KC_3)
-#define ESC  LT(0, KC_4)
-#define RSHIFT LT(0, KC_6)
-#define LSHIFT LT(0, KC_5)
+
+#define LEFT_THUMB      LT(0, KC_1)
+#define RIGHT_THUMB     LT(0, KC_2)
+#define MAC             LT(0, KC_3)
+#define CAPSWORD        LT(0, KC_4)
+
 
 #define CUSTOM_C LT(0, KC_C)
 #define CUSTOM_V LT(0, KC_V)
@@ -70,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSPC,
   MAC,   KC_A,   KC_S,     KC_D,   KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,
   ___,  KC_Z,  KC_X,    CUSTOM_C,  CUSTOM_V,  KC_B, KC_MUTE,     XXX, KC_N,    KC_M,    KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
-    MO(_TMUX), KC_LALT, ___, LEFT_THUMB, OSM(MOD_LSFT),       OSL(_SYMBOL),  RIGHT_THUMB, ___, KC_RALT, KC_RGUI
+    MO(_TMUX), KC_LALT, ___, LEFT_THUMB, CAPSWORD,       OSL(_SYMBOL),  RIGHT_THUMB, ___, KC_RALT, KC_RGUI
 ),
 
 
@@ -119,6 +118,38 @@ static bool process_tap_or_long_press_key(
   return true;  // Continue default handling.
 }
 
+void oneshot_mods_changed_user(uint8_t mods) {
+  bool shifted = (mods & MOD_MASK_SHIFT) != 0;
+  xprintf("%u\n", shifted ? "[ON]": "[OFF]");
+
+}
+
+bool caps_word_press_user(uint16_t keycode) {
+
+    xprintf("%u pressed\n", keycode);
+
+    switch (keycode) {
+        // Keycodes that continue Caps Word, with shift applied.
+        case KC_A ... KC_Z:
+        case KC_MINS:
+          add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to the next key.
+          return true;
+
+        // Keycodes that continue Caps Word, without shifting.
+        /* case KC_1 ... KC_0: */
+        case KC_BSPC:
+        case KC_DEL:
+        case KC_UNDS:
+          return true;
+
+        case 31: // LEFT_THUMB space
+          return false;
+
+        default:
+          return false;  // Deactivate Caps Word.
+    }
+}
+
 /* void matrix_scan_user(void) { */
 /*     clear_recent_keys();  // Timed out; clear the buffer. */
 /* } */
@@ -126,7 +157,6 @@ static bool process_tap_or_long_press_key(
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     if (!process_caps_word(keycode, record))            { return false; }
-    /* if (!process_abbreviation(keycode, record))         { return false; } */
     if (!process_right_ctrl(keycode, record))           { return false; }
     if (!process_left_ctrl(keycode, record))            { return false; }
     if (!process_mac_layer(keycode, record))            { return false; }
@@ -198,6 +228,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case CUSTOM_V:  // Dot on tap, Ctrl+V on long press.
           return process_tap_or_long_press_key(record, G(KC_V));
 
+        case CAPSWORD:
+            if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    set_oneshot_mods(MOD_BIT(KC_LSFT));
+                } else {
+                }
+            } else {                        // Key is being held.
+                if (record->event.pressed) {
+                    caps_word_on();
+                } else {
+                }
+            }
+            return false;  // Skip default handling.
+                           //
         case LEFT_THUMB:
             if (record->tap.count > 0) {    // Key is being tapped.
                 if (record->event.pressed) {
@@ -233,7 +277,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 } else {
                     unregister_code16(KC_ESC);
                 }
-                caps_word_set(false);
+                caps_word_off();
             } else {                        // Key is being held.
                 if (record->event.pressed) {
                     enable_mac_layer();
@@ -242,20 +286,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;  // Skip default handling.
-        case ESC:
-            if (record->tap.count > 0) {    // Key is being tapped.
-                if (record->event.pressed) {
-                    register_code16(KC_ESC);
-                } else {
-                    unregister_code16(KC_ESC);
-                }
-                caps_word_set(false);
-            } else {                        // Key is being held.
-                if (record->event.pressed) {
-                } else {
-                }
-            }
-            return false;  // Skip default handling.
+
     }
     return true;
 }

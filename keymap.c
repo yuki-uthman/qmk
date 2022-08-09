@@ -45,39 +45,6 @@ enum custom_keycodes {
     PANE_CLOSE,
 };
 
-// Tap Dance declarations
-enum {
-    CAPSWORD, SYMLOCK,
-};
-
-void capsword(qk_tap_dance_state_t *state, void *user_data) {
-    switch (state->count) {
-        case 1:
-            add_oneshot_mods(MOD_BIT(KC_LSFT));
-            break;
-        case 2:
-            caps_word_set(true);
-            break;
-    }
-}
-
-void symlock(qk_tap_dance_state_t *state, void *user_data) {
-    switch (state->count) {
-        case 1:
-            set_oneshot_layer(_SYMBOL, ONESHOT_START);
-            break;
-        case 2:
-            layer_invert(_SYMBOL);
-            break;
-    }
-}
-
-// Tap Dance definitions
-qk_tap_dance_action_t tap_dance_actions[] = {
-    [CAPSWORD] = ACTION_TAP_DANCE_FN(capsword),
-    [SYMLOCK] = ACTION_TAP_DANCE_FN(symlock),
-};
-
 
 #define SFT_UNDERSCORE  LSFT_T(KC_UNDERSCORE)
 

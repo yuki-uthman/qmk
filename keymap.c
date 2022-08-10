@@ -84,23 +84,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* SYMBOL
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |   !  |   @  |   #  |   $  |   %  |                    |  ^   |   &  |   [  |   ]  |      |      |
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |   `  |   '  |   "  |      |                    |      |   $  |   {  |   }  |      |      |
+ * |      |      |   <  |   >  |   `  |   @  |                    |   &  |   $  |   {  |   }  |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |   !  |   -  |   +  |   =  |   _  |-------.    ,-------|      |   :  |   (  |   )  |      |   "  |
+ * |      |   !  |   -  |   +  |   =  |   #  |-------.    ,-------|   |  |   ?  |   (  |   )  |   :  |   "  |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * | Shift|   ^  |  /   |   *  |   \  |      |-------|    |-------|      |      |   <  |   >  |   ?  |   -  |
+ * | Shift|   ^  |   /  |   *  |   \  |   %  |-------|    |-------|   ~  |   _  |   [  |   ]  |   ?  |   _  |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            | LGUI | LAlt | LCTR |LOWER | /Enter  /       \Space \  |RAISE | RCTR | RAlt | RGUI |
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
  *            `----------------------------------'           '------''---------------------------'
  */
 [_SYMBOL] = LAYOUT(
-___,   KC_EXLM,  KC_AT,   KC_HASH,  KC_DLR,  KC_PERC,              KC_CIRC, KC_AMPR,  KC_LBRC,  KC_RBRC,  ___,  ___,
-___,   ___,     KC_GRV,  KC_QUOT,  KC_DQUO,  ___,              ___,    KC_DLR,    KC_LCBR,  KC_RCBR,  ___,  ___,
-___,   KC_EXLM, KC_MINS,  KC_PLUS,  KC_EQL,   KC_UNDS,          ___,  KC_COLN,  KC_LPRN,  KC_RPRN,  KC_COLN,  KC_DQUO,
-___,   KC_CIRC, KC_SLSH,  KC_ASTR,  KC_BSLS,  ___,  ___,   ___, ___, ___,   KC_LABK,  KC_RABK,  KC_QUES,  KC_UNDS,
+___,   KC_EXLM, KC_AT,    KC_HASH,  KC_DLR,   KC_PERC,              KC_CIRC, KC_AMPR,  KC_LBRC,  KC_RBRC,  ___,  ___,
+___,   ___, KC_LABK,  KC_RABK,  KC_GRV,   KC_AT,                KC_AMPR, KC_DLR,   KC_LCBR,  KC_RCBR,  ___,  ___,
+___,   KC_EXLM, KC_MINS,  KC_PLUS,  KC_EQL,   KC_HASH,              KC_PIPE, KC_QUES,  KC_LPRN,  KC_RPRN,  KC_COLN,  KC_DQUO,
+___,   KC_CIRC, KC_SLSH,  KC_ASTR,  KC_BSLS,  KC_PERC,  ___,   ___, KC_TILD, KC_UNDS,  KC_LBRC,  KC_RBRC,  KC_QUES,  KC_UNDS,
                         ___,___,___,___, ___,               ___,  ___, ___, ___, ___
 ),
 

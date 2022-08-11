@@ -15,10 +15,8 @@
 #define RIGHT_THUMB     LT(0, KC_2)
 #define MAC             LT(0, KC_3)
 #define CAPSWORD        LT(0, KC_4)
-
-
-#define CUSTOM_C LT(0, KC_C)
-#define CUSTOM_V LT(0, KC_V)
+#define CUSTOM_C        LT(0, KC_5) // 16418
+#define CUSTOM_V        LT(0, KC_6) // 16419
 
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
@@ -105,18 +103,6 @@ ___,   KC_CIRC, KC_SLSH,  KC_ASTR,  KC_BSLS,  KC_PERC,  ___,   ___, KC_TILD, KC_
 ),
 
 };
-
-/* https://getreuer.info/posts/keyboards/triggers/index.html#tap-vs.-long-press */
-static bool process_tap_or_long_press_key(
-    keyrecord_t* record, uint16_t long_press_keycode) {
-  if (record->tap.count == 0) {  // Key is being held.
-    if (record->event.pressed) {
-      tap_code16(long_press_keycode);
-    }
-    return false;  // Skip default handling.
-  }
-  return true;  // Continue default handling.
-}
 
 void oneshot_mods_changed_user(uint8_t mods) {
   bool shifted = (mods & MOD_MASK_SHIFT) != 0;
@@ -223,10 +209,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         case CUSTOM_C:  // Comma on tap, Ctrl+C on long press.
-          return process_tap_or_long_press_key(record, G(KC_C));
+            if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    register_code16(KC_C);
+                } else {
+                    unregister_code16(KC_C);
+                }
+            } else {                        // Key is being held.
+                if (record->event.pressed) {
+                    register_code16(G(KC_C));
+                } else {
+                    unregister_code16(G(KC_C));
+                }
+            }
+            return false;  // Skip default handling.
 
         case CUSTOM_V:  // Dot on tap, Ctrl+V on long press.
-          return process_tap_or_long_press_key(record, G(KC_V));
+            if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    register_code16(KC_V);
+                } else {
+                    unregister_code16(KC_V);
+                }
+            } else {                        // Key is being held.
+                if (record->event.pressed) {
+                    register_code16(G(KC_V));
+                } else {
+                    unregister_code16(G(KC_V));
+                }
+            }
+            return false;  // Skip default handling.
 
         case CAPSWORD:
             if (record->tap.count > 0) {    // Key is being tapped.

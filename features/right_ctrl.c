@@ -124,13 +124,29 @@ bool process_right_ctrl(uint16_t keycode, const keyrecord_t *record) {
         }
         return false;
 
-    case 16414: // handle left_thumb
+    // custom keys
+    case 16414: // LEFT_THUMB
         if (record->event.pressed) {
             register_code16(G(KC_SPC)); // open Alfred
         } else {
             unregister_code16(G(KC_SPC));
         }
         return false;
+    case 16418: // CUSTOM_C
+        if (record->event.pressed) {
+            register_code16(C(KC_C));
+        } else {
+            unregister_code16(C(KC_C));
+        }
+        return false;
+    case 16419: // CUSTOM_V
+        if (record->event.pressed) {
+            register_code16(C(KC_V));
+        } else {
+            unregister_code16(C(KC_V));
+        }
+        return false;
+
     default: // everything else Ctrl + Keycode
         if (record->event.pressed) {
             register_code16(C(keycode));

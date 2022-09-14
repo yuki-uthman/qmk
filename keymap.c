@@ -84,11 +84,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |   <  |   !  |   >  |      |                    |   &  |   {  |   }  |   %  |      |   \  |
+ * |      |      |   ^  |   +  |   *  |  $   |                    |   {  |   ?  |   %  |   }  |   &  |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |   ^  |   -  |   =  |   +  |  $   |-------.    ,-------|   |  |   (  |   )  |   #  |   :  |   "  |
+ * |      |      |   <  |   -  |   =  |  >   |-------.    ,-------|   (  |   :  |   #  |   )  |   |  |   "  |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * | Shift|      |   _  |   *  |      |      |-------|    |-------|   ~  |   [  |   ]  |   @  |   ?  |      |
+ * | Shift|      |      |   /  |   _  |   \  |-------|    |-------|   [  |   !  |   @  |   ]  |   ~  |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            | LGUI | LAlt | LCTR |LOWER | /Enter  /       \Space \  |RAISE | RCTR | RAlt | RGUI |
  *            |      |      |      |      |/       /         \      \ |      |      |      |      |
@@ -96,12 +96,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_SYMBOL] = LAYOUT(
 ___,   ___, ___,    ___,  ___,   ___,                               ___,  ___,  ___, ___,  ___,  ___,
-___,   ___,     KC_LABK,  KC_EXLM,  KC_RABK,   ___,         KC_AMPR,  KC_LCBR,  KC_RCBR, KC_PERC,   ___,     KC_BSLS,
-___,   KC_CIRC, KC_MINS,  KC_EQL,   KC_PLUS,  KC_DLR,       KC_PIPE,  KC_LPRN,  KC_RPRN, KC_HASH,  KC_COLN,  KC_DQUO,
-___,   ___,     KC_UNDS,  KC_ASTR,  ___,  ___,  ___,   ___, KC_TILD,  KC_LBRC,  KC_RBRC, KC_AT,  KC_QUES,  ___,
+___,   ___, KC_CIRC,  KC_PLUS,  KC_ASTR,   KC_DLR,          KC_LCBR,  KC_QUES,   KC_PERC,  KC_RCBR,   KC_AMPR,   KC_BSLS,
+___,   ___, KC_LABK,  KC_MINS,  KC_EQL,  KC_RABK,           KC_LPRN,  KC_COLN,   KC_HASH,  KC_RPRN,   KC_PIPE,   KC_DQUO,
+___,   ___, ___,      KC_SLSH,  KC_UNDS,  KC_BSLS, ___,___, KC_LBRC,  KC_EXLM,   KC_AT,    KC_RBRC,   KC_TILD,   ___,
                         ___,___,___,KC_BSPC, ___,               ___,  KC_BSPC, ___, ___, ___
 ),
-
 };
 
 void oneshot_mods_changed_user(uint8_t mods) {

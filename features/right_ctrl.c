@@ -33,12 +33,12 @@ bool process_right_ctrl(uint16_t keycode, const keyrecord_t *record) {
 
     switch (keycode) {
 
-    // backspace
+    // =
     case KC_J:
         if (record->event.pressed) {
-            register_code16(KC_BSPC);
+            register_code16(KC_EQL);
         } else {
-            unregister_code16(KC_BSPC);
+            unregister_code16(KC_EQL);
         }
         return false;
 
@@ -126,7 +126,9 @@ bool process_right_ctrl(uint16_t keycode, const keyrecord_t *record) {
     // custom keys
     case 16414: // LEFT_THUMB
         if (record->event.pressed) {
+            register_code16(KC_BSPC);
         } else {
+            unregister_code16(KC_BSPC);
         }
         return false;
     case 16418: // CUSTOM_C

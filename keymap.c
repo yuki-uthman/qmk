@@ -256,11 +256,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case LEFT_THUMB:
             if (record->tap.count > 0) {    // Key is being tapped.
                 if (record->event.pressed) {
-                    register_code16(KC_ESC);
                 } else {
-                    unregister_code16(KC_ESC);
                 }
-                caps_word_off();
             } else {                        // Key is being held.
                 if (record->event.pressed) {
                     enable_left_ctrl();
@@ -286,6 +283,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;  // Skip default handling.
         case MAC:
             if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    register_code16(KC_ESC);
+                } else {
+                    unregister_code16(KC_ESC);
+                }
+                caps_word_off();
             } else {                        // Key is being held.
                 if (record->event.pressed) {
                     enable_mac_layer();

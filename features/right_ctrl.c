@@ -124,7 +124,7 @@ bool process_right_ctrl(uint16_t keycode, const keyrecord_t *record) {
         return false;
 
     // custom keys
-    case 16414: // LEFT_THUMB
+    case 16416: // MAC
         if (record->event.pressed) {
             register_code16(KC_BSPC);
         } else {

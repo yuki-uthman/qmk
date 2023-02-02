@@ -110,8 +110,8 @@ bool process_right_ctrl(uint16_t keycode, const keyrecord_t *record) {
         return false;
     case KC_K:
         if (record->event.pressed) {
-            tap_code16(KC_Z);
-            tap_code16(KC_Z);
+            tap_code16(S(KC_Z));
+            tap_code16(S(KC_Z));
         }
         return false;
 

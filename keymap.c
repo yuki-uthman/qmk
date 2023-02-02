@@ -74,9 +74,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_TMUX] = LAYOUT(
   ___,   ___,   ___,    ___,    ___,    ___,                ___,    ___,    ___,    ___,    ___,  ___,
-  ___,   ___,   ___,    ___,    ___,    ___,                ___,    ___,    ___,    ___, ___,  WINDOW_HSPLIT,
+  ___,   ___,   ___,    ___,    ___,    ___,                ___,    ___,    ___,    ___, ___,  ___,
   ___,   ___,   ___,    ___,    ___,    ___,                WINDOW_PREV,  SESSION_NEXT,  SESSION_PREV,  WINDOW_NEXT,  WINDOW_ALT,  ___,
-  ___,   ___,   ___,    PANE_CLOSE, ___, ___, ___,     ___, ___,    ___,    ___,  ___, WINDOW_VSPLIT,  ___,
+  ___,___,___,PANE_CLOSE,WINDOW_HSPLIT, ___, ___,     ___, ___,    ___,    WINDOW_VSPLIT,  ___, ___,  ___,
                         ___,___,___,___, ___,               ___,  WINDOW_ZOOM, ___, ___, ___
 ),
 

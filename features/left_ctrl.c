@@ -73,37 +73,11 @@ bool process_left_ctrl(uint16_t keycode, const keyrecord_t *record) {
         }
         return false;
 
-// symbols
-//  ASDF !-+=
     case KC_F:
         if (record->event.pressed) {
-            register_code16(KC_EQL);
-        } else {
-            unregister_code16(KC_EQL);
+            tap_code16(TMUX_KEY);
         }
         return false;
-    case KC_D:
-        if (record->event.pressed) {
-            register_code16(KC_PLUS);
-        } else {
-            unregister_code16(KC_PLUS);
-        }
-        return false;
-    case KC_S:
-        if (record->event.pressed) {
-            register_code16(KC_MINS);
-        } else {
-            unregister_code16(KC_MINS);
-        }
-        return false;
-    case KC_A:
-        if (record->event.pressed) {
-            register_code16(KC_EXLM);
-        } else {
-            unregister_code16(KC_EXLM);
-        }
-        return false;
-
 // <>
     case KC_DOT:
         if (record->event.pressed) {

@@ -7,6 +7,8 @@ for more options.
 
 #define MASTER_LEFT
 
+#define TMUX_KEY C(KC_Z)
+
 // Tap-hold configuration for home row mods.
 #define IGNORE_MOD_TAP_INTERRUPT
 #define PERMISSIVE_HOLD

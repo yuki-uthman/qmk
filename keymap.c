@@ -9,8 +9,6 @@
 #define ___ KC_TRNS // just for easy reading
 #define XXX KC_NO    // just for easy reading
 
-#define TMUX_KEY C(KC_Z)
-
 #define LEFT_THUMB      LT(0, KC_1)
 #define RIGHT_THUMB     LT(0, KC_2)
 #define MAC             LT(0, KC_3)

@@ -30,7 +30,20 @@ bool process_left_ctrl(uint16_t keycode, const keyrecord_t *record) {
 
     if (!left_ctrl_is_enabled()) { return true; }
 
+    static bool g_is_held = false;
+    if (record->event.pressed) {
+        if (g_is_held) {
+            tap_code16(S(keycode));
+            return false;
+        }
+    }
+
     switch (keycode) {
+
+    case KC_G:
+        g_is_held = record->event.pressed;
+        return false;
+
     case KC_H:
         if (record->event.pressed) {
             register_code16(KC_LEFT);

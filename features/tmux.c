@@ -16,8 +16,7 @@ void disable_tmux(void) {
 }
 
 /* return false to finish processing of the key */
-/* return true to fall through to the qmk processing of the key */
-
+/* return true  to fall through to the qmk processing of the key */
 bool process_tmux(uint16_t keycode, const keyrecord_t *record) {
 
     if (!tmux_is_enabled()) { return true; }
@@ -29,56 +28,53 @@ bool process_tmux(uint16_t keycode, const keyrecord_t *record) {
                 tap_code16(TMUX_KEY);
                 tap_code16(KC_N);
             }
-            break;
+            return false;
         case KC_H:
             if (record->event.pressed) {
                 tap_code16(TMUX_KEY);
                 tap_code16(KC_P);
             }
-            break;
+            return false;
         case KC_J:
             if (record->event.pressed) {
                 tap_code16(TMUX_KEY);
                 tap_code16(S(KC_0));
             }
-            break;
+            return false;
         case KC_K:
             if (record->event.pressed) {
                 tap_code16(TMUX_KEY);
                 tap_code16(S(KC_9));
             }
-            break;
+            return false;
 
         case 16418: // custom_c
             if (record->event.pressed) {
                 tap_code16(TMUX_KEY);
                 tap_code16(KC_X);
             }
-            break;
+            return false;
         case 16419: // custom_v
             if (record->event.pressed) {
                 tap_code16(TMUX_KEY);
                 tap_code16(S(KC_5));
             }
-            break;
+            return false;
         case KC_COMM:
             if (record->event.pressed) {
                 tap_code16(TMUX_KEY);
                 tap_code16(S(KC_QUOT));
             }
-            break;
+            return false;
 
         case 16415: // handle right thumb
             if (record->event.pressed) {
                 tap_code16(TMUX_KEY);
                 tap_code16(KC_Z);
             }
-            break;
+            return false;
 
         default: // dont do anything for other keys
             return true;
     }
-
-    // cancel further processing of the key
-    return false;
 }

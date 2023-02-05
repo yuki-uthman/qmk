@@ -19,30 +19,8 @@
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
     _QWERTY,
-    _VIM,
-    _TMUX,
     _SYMBOL,
-    _NUMBER,
 };
-
-enum custom_keycodes {
-    KC_QWERTY = SAFE_RANGE,
-    KC_VIM,
-    KC_TMUX,
-    NEXTSEN,
-    SESSION_NEXT,
-    SESSION_PREV,
-    WINDOW_NEXT,
-    WINDOW_PREV,
-    WINDOW_ALT,
-    WINDOW_ZOOM,
-    WINDOW_VSPLIT,
-    WINDOW_HSPLIT,
-    PANE_CLOSE,
-};
-
-
-#define SFT_UNDERSCORE  LSFT_T(KC_UNDERSCORE)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
@@ -69,16 +47,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     TMUX, KC_LALT, CAPSWORD, LEFT_THUMB, OSL(_SYMBOL),       OSL(_SYMBOL),  RIGHT_THUMB, CAPSWORD, KC_RALT, KC_RGUI
 ),
 
-
-[_TMUX] = LAYOUT(
-  ___,   ___,   ___,    ___,    ___,    ___,                ___,    ___,    ___,    ___,    ___,  ___,
-  ___,   ___,   ___,    ___,    ___,    ___,                ___,    ___,    ___,    ___, ___,  ___,
-  ___,   ___,   ___,    ___,    ___,    ___,                WINDOW_PREV,  SESSION_NEXT,  SESSION_PREV,  WINDOW_NEXT,  WINDOW_ALT,  ___,
-  ___,___,___,PANE_CLOSE,WINDOW_HSPLIT, ___, ___,     ___, ___,    ___,    WINDOW_VSPLIT,  ___, ___,  ___,
-                        ___,___,___,___, ___,               ___,  WINDOW_ZOOM, ___, ___, ___
-),
-
-
 /* SYMBOL
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      |      |      |      |      |      |                    |   [  |   '  |   #  |   ]  |      |      |
@@ -101,20 +69,8 @@ ___,   ___, KC_UNDS,  KC_TILD,  KC_SLSH,  KC_ASTR, ___,___, KC_LABK,  KC_SLSH,  
                         ___,___,___, ___, ___,               ___,   ___, ___, ___, ___
 ),
 
-[_NUMBER] = LAYOUT(
-___,  ___, ___, ___,  ___,  ___,                               ___,  ___,  ___, ___,  ___,  ___,
-___,  ___, ___, ___,  ___,  ___,           KC_PLUS,  KC_4,   KC_5,  KC_6,   KC_ASTR,   KC_BSPC,
-___,  ___, ___, ___,  ___,  ___,           KC_EQL,   KC_1,   KC_2,  KC_3,   KC_0,      ___,
-___,  ___, ___, ___,  ___,  ___, ___, ___, KC_MINS,  KC_7,   KC_8,  KC_9,   KC_SLSH,   ___,
-                        ___,___,___, ___, ___,               ___,   ___, ___, ___, ___
-),
 };
 
-void oneshot_mods_changed_user(uint8_t mods) {
-  bool shifted = (mods & MOD_MASK_SHIFT) != 0;
-  xprintf("%u\n", shifted ? "[ON]": "[OFF]");
-
-}
 
 bool caps_word_press_user(uint16_t keycode) {
 
@@ -144,10 +100,6 @@ bool caps_word_press_user(uint16_t keycode) {
     }
 }
 
-/* void matrix_scan_user(void) { */
-/*     clear_recent_keys();  // Timed out; clear the buffer. */
-/* } */
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     if (!process_caps_word(keycode, record))            { return false; }
@@ -156,67 +108,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_tmux(keycode, record))                 { return false; }
 
     switch (keycode) {
-        case PANE_CLOSE:
-            if (record->event.pressed) {
-                tap_code16(TMUX_KEY);
-                tap_code16(KC_X);
-            }
-            break;
-        case WINDOW_NEXT:
-            if (record->event.pressed) {
-                tap_code16(TMUX_KEY);
-                tap_code16(KC_N);
-            }
-            break;
-        case WINDOW_PREV:
-            if (record->event.pressed) {
-                tap_code16(TMUX_KEY);
-                tap_code16(KC_P);
-            }
-            break;
-        case WINDOW_ALT:
-            if (record->event.pressed) {
-                tap_code16(TMUX_KEY);
-                tap_code16(KC_L);
-            }
-            break;
-        case WINDOW_ZOOM:
-            if (record->event.pressed) {
-                tap_code16(TMUX_KEY);
-                tap_code16(KC_Z);
-            }
-            break;
-        case WINDOW_HSPLIT:
-            if (record->event.pressed) {
-                tap_code16(TMUX_KEY);
-                tap_code16(S(KC_5));
-            }
-            break;
-        case WINDOW_VSPLIT:
-            if (record->event.pressed) {
-                tap_code16(TMUX_KEY);
-                tap_code16(S(KC_QUOT));
-            }
-            break;
-        case SESSION_NEXT:
-            if (record->event.pressed) {
-                tap_code16(TMUX_KEY);
-                tap_code16(S(KC_0));
-            }
-            break;
-        case SESSION_PREV:
-            if (record->event.pressed) {
-                tap_code16(TMUX_KEY);
-                tap_code16(S(KC_9));
-            }
-            break;
-
-        case KC_QWERTY:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_QWERTY);
-            }
-            return false;
-
         case CUSTOM_C:  // Comma on tap, Ctrl+C on long press.
             if (record->tap.count > 0) {    // Key is being tapped.
                 if (record->event.pressed) {
@@ -262,7 +153,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;  // Skip default handling.
-                           //
+
         case LEFT_THUMB:
             if (record->tap.count > 0) {    // Key is being tapped.
                 if (record->event.pressed) {
@@ -276,6 +167,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;  // Skip default handling.
+
         case RIGHT_THUMB:
             if (record->tap.count > 0) {    // Key is being tapped.
                 if (record->event.pressed) {
@@ -291,6 +183,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;  // Skip default handling.
+
         case TMUX:
             if (record->tap.count > 0) {    // Key is being tapped.
             } else {                        // Key is being held.
@@ -301,24 +194,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;  // Skip default handling.
-        /* case MAC: */
-        /*     if (record->tap.count > 0) {    // Key is being tapped. */
-        /*         if (record->event.pressed) { */
-        /*             register_code16(KC_ESC); */
-        /*         } else { */
-        /*             unregister_code16(KC_ESC); */
-        /*         } */
-        /*         caps_word_off(); */
-        /*     } else {                        // Key is being held. */
-        /*         if (record->event.pressed) { */
-        /*             enable_mac_layer(); */
-        /*         } else { */
-        /*             disable_mac_layer(); */
-        /*         } */
-        /*     } */
-        /*     return false;  // Skip default handling. */
 
+        default:
+            return true;  // Process all other keycodes normally.
     }
-    return true;
 }
 

@@ -4,14 +4,14 @@
 #include "features/caps_word.h"
 #include "features/left_ctrl.h"
 #include "features/right_ctrl.h"
-#include "features/macOS.h"
+#include "features/tmux.h"
 
 #define ___ KC_TRNS // just for easy reading
 #define XXX KC_NO    // just for easy reading
 
 #define LEFT_THUMB      LT(0, KC_1)
 #define RIGHT_THUMB     LT(0, KC_2)
-#define MAC             LT(0, KC_3)
+#define TMUX            LT(0, KC_3)
 #define CAPSWORD        LT(0, KC_4)
 #define CUSTOM_C        LT(0, KC_5) // 16418
 #define CUSTOM_V        LT(0, KC_6) // 16419
@@ -64,9 +64,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY] = LAYOUT(
   KC_GRV,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_BSLS,
   KC_TAB,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSPC,
-  MAC,   KC_A,   KC_S,     KC_D,   KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,
+  KC_ESC,   KC_A,   KC_S,     KC_D,   KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,
   ___,  KC_Z,  KC_X,    CUSTOM_C,  CUSTOM_V,  KC_B, KC_MUTE,     XXX, KC_N,    KC_M,    KC_COMM, KC_DOT, KC_SLSH, KC_MINS,
-    MO(_TMUX), KC_LALT, CAPSWORD, LEFT_THUMB, OSL(_SYMBOL),       OSL(_SYMBOL),  RIGHT_THUMB, CAPSWORD, KC_RALT, KC_RGUI
+    TMUX, KC_LALT, CAPSWORD, LEFT_THUMB, OSL(_SYMBOL),       OSL(_SYMBOL),  RIGHT_THUMB, CAPSWORD, KC_RALT, KC_RGUI
 ),
 
 
@@ -153,7 +153,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_caps_word(keycode, record))            { return false; }
     if (!process_right_ctrl(keycode, record))           { return false; }
     if (!process_left_ctrl(keycode, record))            { return false; }
-    if (!process_mac_layer(keycode, record))            { return false; }
+    if (!process_tmux(keycode, record))                 { return false; }
 
     switch (keycode) {
         case PANE_CLOSE:
@@ -210,6 +210,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code16(S(KC_9));
             }
             break;
+
         case KC_QWERTY:
             if (record->event.pressed) {
                 set_single_persistent_default_layer(_QWERTY);
@@ -290,22 +291,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;  // Skip default handling.
-        case MAC:
+        case TMUX:
             if (record->tap.count > 0) {    // Key is being tapped.
-                if (record->event.pressed) {
-                    register_code16(KC_ESC);
-                } else {
-                    unregister_code16(KC_ESC);
-                }
-                caps_word_off();
             } else {                        // Key is being held.
                 if (record->event.pressed) {
-                    enable_mac_layer();
+                    enable_tmux();
                 } else {
-                    disable_mac_layer();
+                    disable_tmux();
                 }
             }
             return false;  // Skip default handling.
+        /* case MAC: */
+        /*     if (record->tap.count > 0) {    // Key is being tapped. */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(KC_ESC); */
+        /*         } else { */
+        /*             unregister_code16(KC_ESC); */
+        /*         } */
+        /*         caps_word_off(); */
+        /*     } else {                        // Key is being held. */
+        /*         if (record->event.pressed) { */
+        /*             enable_mac_layer(); */
+        /*         } else { */
+        /*             disable_mac_layer(); */
+        /*         } */
+        /*     } */
+        /*     return false;  // Skip default handling. */
 
     }
     return true;

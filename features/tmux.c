@@ -60,7 +60,7 @@ bool process_tmux(uint16_t keycode, const keyrecord_t *record) {
                 tap_code16(S(KC_5));
             }
             return false;
-        case KC_COMM:
+        case KC_S: // split
             if (record->event.pressed) {
                 tap_code16(TMUX_KEY);
                 tap_code16(S(KC_QUOT));

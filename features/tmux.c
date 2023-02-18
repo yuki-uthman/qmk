@@ -55,6 +55,12 @@ bool process_tmux(uint16_t keycode, const keyrecord_t *record) {
             }
             return false;
 
+        case KC_O: // new window
+            if (record->event.pressed) {
+                tap_code16(TMUX_KEY);
+                tap_code16(KC_O);
+            }
+            return false;
         case 16418: // custom_c
             if (record->event.pressed) {
                 tap_code16(TMUX_KEY);

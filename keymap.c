@@ -186,6 +186,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case TMUX:
             if (record->tap.count > 0) {    // Key is being tapped.
+                if (record->event.pressed) {
+                    register_code16(TMUX_KEY);
+                } else {
+                    unregister_code16(TMUX_KEY);
+                }
             } else {                        // Key is being held.
                 if (record->event.pressed) {
                     enable_tmux();

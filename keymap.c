@@ -49,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* SYMBOL
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |      |      |      |      |      |                    |   [  |   *  |   #  |   ]  |      |      |
+ * |      |      |      |      |      |      |                    |   [  |   &  |   #  |   ]  |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |   ^  |   +  |   ?  |  $   |                    |   {  |   "  |   =  |   }  |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -62,7 +62,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *            `----------------------------------'           '------''---------------------------'
  */
 [_SYMBOL] = LAYOUT(
-___,   ___, ___,    ___,  ___,   ___,                       KC_LBRC,  KC_ASTR,   KC_HASH, KC_RBRC,  ___,  ___,
+___,   ___, ___,    ___,  ___,   ___,                       KC_LBRC,  KC_AMPR,   KC_HASH, KC_RBRC,  ___,  ___,
 ___,   ___, KC_CIRC,  KC_PLUS,  KC_QUES,  KC_DLR,           KC_LCBR,  KC_DQUO,   KC_EQL,  KC_RCBR,  ___,  ___,
 ___,   ___, KC_LABK,  KC_EQL,   KC_PLUS,  KC_RABK,          KC_LPRN,  KC_COLN,   KC_MINS, KC_RPRN,  ___,  ___,
 ___,   ___, KC_UNDS,  KC_TILD,  KC_SLSH,  KC_ASTR, ___,___, KC_LABK,  KC_SLSH,   KC_UNDS, KC_RABK,  ___,  ___,

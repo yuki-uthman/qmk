@@ -33,14 +33,6 @@ bool process_right_ctrl(uint16_t keycode, const keyrecord_t *record) {
 
     switch (keycode) {
 
-    case KC_D: // backspace
-        if (record->event.pressed) {
-            register_code16(KC_BSPC);
-        } else {
-            unregister_code16(KC_BSPC);
-        }
-        return false;
-
     // =
     case KC_J:
         if (record->event.pressed) {

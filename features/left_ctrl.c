@@ -123,6 +123,14 @@ bool process_left_ctrl(uint16_t keycode, const keyrecord_t *record) {
         }
         return false;
 
+    case KC_BSPC:
+        if (record->event.pressed) {
+            register_code16(C(KC_W));
+        } else {
+            unregister_code16(C(KC_W));
+        }
+        return false;
+
 
     case 16415: // handle right_thumb
         if (record->event.pressed) {

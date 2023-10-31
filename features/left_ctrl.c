@@ -86,43 +86,6 @@ bool process_left_ctrl(uint16_t keycode, const keyrecord_t *record) {
         }
         return false;
 
-    case KC_F:
-        if (record->event.pressed) {
-            tap_code16(TMUX_KEY);
-        }
-        return false;
-// <>
-    case KC_DOT:
-        if (record->event.pressed) {
-            register_code16(KC_RABK);
-        } else {
-            unregister_code16(KC_RABK);
-        }
-        return false;
-    case KC_COMM:
-        if (record->event.pressed) {
-            register_code16(KC_LABK);
-        } else {
-            unregister_code16(KC_LABK);
-        }
-        return false;
-
-    case KC_SCLN:
-        if (record->event.pressed) {
-            register_code16(KC_COLN);
-        } else {
-            unregister_code16(KC_COLN);
-        }
-        return false;
-
-    case KC_QUOT:
-        if (record->event.pressed) {
-            register_code16(KC_DQUO);
-        } else {
-            unregister_code16(KC_DQUO);
-        }
-        return false;
-
     case KC_BSPC:
         if (record->event.pressed) {
             register_code16(C(KC_W));

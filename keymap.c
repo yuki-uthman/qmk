@@ -61,9 +61,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *               '-----------------------------------'    '-----------------------------------'
  */
 [_SYMBOL] = LAYOUT(
-___,   ___,     ___,        ___,        ___,        ___,              KC_LBRC,  KC_AMPR,   KC_HASH, KC_RBRC,  ___,  ___,
-___,   KC_EXLM, KC_MINS,    KC_EQL,     KC_PLUS,    KC_ASTR,          KC_LCBR,  KC_DQUO,   KC_EQL,  KC_RCBR,  ___,  ___,
-___,   KC_0,    KC_1,       KC_2,       KC_3,       ___,              KC_LPRN,  KC_COLN,   KC_MINS, KC_RPRN,  ___,  ___,
+___,   ___,     ___,        KC_CIRC,    KC_DLR,     KC_PERC,          KC_LBRC,  KC_AMPR,   KC_HASH, KC_RBRC,  ___,  ___,
+___,   KC_EXLM, KC_AT,      KC_EQL,     KC_PLUS,    KC_ASTR,          KC_LCBR,  KC_DQUO,   KC_EQL,  KC_RCBR,  ___,  ___,
+___,   KC_0,    KC_EXLM,    KC_QUES,    KC_SCLN,       ___,           KC_LPRN,  KC_COLN,   KC_MINS, KC_RPRN,  ___,  ___,
 ___,   ___,     KC_4,       KC_5,       KC_6,       ___,     ___,___, KC_LABK,  KC_SLSH,   KC_UNDS, KC_RABK,  ___,  ___,
                 KC_7,       KC_8,       KC_9,       KC_SPC,     ___,               ___,   ___, ___, ___, ___
 ),

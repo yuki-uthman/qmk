@@ -62,6 +62,13 @@ bool process_right_ctrl(uint16_t keycode, const keyrecord_t *record) {
             unregister_code16(C(KC_V));
         }
         return false;
+    case 16414: // handle the left thumb
+        if (record->event.pressed) {
+            register_code16(C(KC_SPC));
+        } else {
+            unregister_code16(C(KC_SPC));
+        }
+        return false;
 
     default: // everything else Ctrl + Keycode
         if (record->event.pressed) {
